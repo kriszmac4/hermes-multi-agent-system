@@ -1,0 +1,23 @@
+{
+  "server_id": "1501144914333925376",
+  "channels": {
+    "research": "1501147842595655721",
+    "dev": "1501148006219776002",
+    "devops": "1501148027417793588",
+    "news": "1501148027417792652",
+    "general": "1501148038117330995",
+    "study": "1501188232807972905",
+    "human": "1501617834952888455",
+    "team": "1501633520563654716",
+    "fitness": "1502328792788762694"
+  },
+  "tokens": {
+    "research": "${DISCORD_TOKEN_RESEARCH}",
+    "dev": "${DISCORD_TOKEN_DEV}",
+    "devops": "${DISCORD_TOKEN_DEVOPS}",
+    "news": "${DISCORD_TOKEN_NEWS}",
+    "general": "${DISCORD_TOKEN_GENERAL}",
+    "study": "${DISCORD_TOKEN_STUDY}",
+    "fitness": "${DISCORD_TOKEN_FITNESS}"
+  }
+}

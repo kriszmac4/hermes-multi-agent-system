@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.db
+.env
+data/
+tasks.json
+development.json
+token_logger.py
