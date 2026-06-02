@@ -1,0 +1,49 @@
+{
+    "name": "research",
+    "display_name": "Research Agent",
+    "description": "Deep web research, multi-source analysis, market research, literature review, academic paper search. Specialist for finding and synthesizing information across many sources. Responds in Hungarian with source citations.",
+    "version": "2.0.0",
+    "skills": [
+        {
+            "id": "web-research",
+            "description": "Find and synthesize information from multiple web sources with citations",
+            "keywords": [
+                "kutass", "nézz utána", "research", "keress rá",
+                "web search", "what is", "hogyan működik", "tudj meg mindent",
+                "információ", "adat", "statisztika", "összehasonlítás"
+            ],
+            "examples": [
+                "kutass a LangGraph vs CrewAI közti különbségről",
+                "what is A2A protocol?",
+                "mennyi a magyar GDP 2025-ben?"
+            ]
+        },
+        {
+            "id": "market-analysis",
+            "description": "Analyze markets, competitors, trends, pricing",
+            "keywords": [
+                "piac", "market", "versenytárs", "trend", "competitor",
+                "árak", "pricing", "iparág", "industry analysis"
+            ]
+        },
+        {
+            "id": "literature-review",
+            "description": "Review academic papers, arXiv preprints, technical literature",
+            "keywords": [
+                "paper", "arxiv", "szakirodalom", "review", "tanulmány",
+                "publikáció", "cikk", "journal"
+            ]
+        }
+    ],
+    "capabilities": [
+        "research", "analysis", "synthesis", "citation",
+        "multi_source", "comparison", "academic"
+    ],
+    "toolsets": ["web", "browser", "search", "terminal", "file"],
+    "model": "glm-5.1",
+    "autonomy_level": 3,
+    "smart_approval": true,
+    "is_fallback": false,
+    "channels": ["discord/research", "discord/team", "discord/human", "discord/general"],
+    "bus_address": "research"
+}

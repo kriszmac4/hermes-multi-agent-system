@@ -1,0 +1,48 @@
+{
+    "name": "general",
+    "display_name": "General (Orchestrator)",
+    "description": "Central orchestrator — routes tasks to specialists, synthesizes results, handles Telegram + Discord #general. Always available; delegates to dev/research/study based on task type.",
+    "version": "2.0.0",
+    "skills": [
+        {
+            "id": "task-routing",
+            "description": "Analyze a request and route it to the best specialist agent(s)",
+            "keywords": [
+                "route", " delegatedl", "terv", "tervez", "plan", "ki csinálja",
+                "melyik agent", "kinek küldjem", "delegálás"
+            ],
+            "examples": [
+                "kutass a piacról → research",
+                "implementálj egy feature-t → dev",
+                "dolgozd ki a tételt → study"
+            ],
+            "model_hint": "plan-mode"
+        },
+        {
+            "id": "result-synthesis",
+            "description": "Combine outputs from multiple agents into one coherent response",
+            "keywords": [
+                "foglald össze", "szintetizál", "kombinál", "egyesítsd",
+                "summarize results", "összefoglaló"
+            ]
+        },
+        {
+            "id": "general-qa",
+            "description": "Answer general knowledge questions directly without delegation",
+            "keywords": [
+                "mi a", "mennyi", "hol van", "ki volt", "magyarázd el"
+            ]
+        }
+    ],
+    "capabilities": [
+        "orchestration", "routing", "synthesis", "general_qa",
+        "telegram", "discord_general", "discord_team", "discord_human"
+    ],
+    "toolsets": ["web", "browser", "search", "terminal", "file"],
+    "model": "glm-5.1",
+    "autonomy_level": 3,
+    "smart_approval": true,
+    "is_fallback": false,
+    "channels": ["telegram", "discord/general", "discord/team", "discord/human"],
+    "bus_address": "general"
+}

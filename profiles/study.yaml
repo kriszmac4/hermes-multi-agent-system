@@ -1,0 +1,75 @@
+model:
+  persist_default: true
+  default: big-pickle
+  provider: opencode-zen-art
+  base_url: https://opencode.ai/zen/v1
+discord:
+  token: ${DISCORD_STUDY_TOKEN}
+  require_mention: true
+  auto_thread: true
+  free_response_channels: ''
+  allowed_channels: 1501148038117330995,1501144915340562504,1501148016713793588,1501188232807972905,1501188244006506547,1501188255612145796,1501617834952888455,1501633520563654716,1502328792788762694,1504006733826232521,1505219180482396294,1501148027417792652
+agent:
+  reasoning_effort: medium
+  max_turns: 60
+approvals:
+  mode: false
+  cron_mode: auto
+memory:
+  memory_enabled: false
+  user_profile_enabled: false
+mcp_servers:
+  open_notebook:
+    command: python3
+    args:
+    - /home/artofphotogrphyy/.hermes/profiles/study/bin/open_notebook_mcp_server.py
+    env:
+      OPEN_NOTEBOOK_API_URL: http://localhost:5055/api
+  notebooklm:
+    command: npx
+    args:
+    - notebooklm-mcp@latest
+    env:
+      HEADLESS: 'true'
+      DISPLAY: :99
+      STEALTH_ENABLED: 'false'
+  marveen:
+    command: python3
+    args:
+    - /home/artofphotogrphyy/.hermes/scripts/marveen_mcp_server.py
+    env:
+      HERMES_HOME: /home/artofphotogrphyy/.hermes
+onboarding:
+  seen:
+    busy_input_prompt: true
+voice:
+  auto_tts: true
+  beep_enabled: false
+  max_recording_seconds: 120
+  record_key: ctrl+b
+  silence_duration: 3.0
+  silence_threshold: 200
+stt:
+  enabled: false
+  provider: local
+  local:
+    model: medium
+    language: hu
+tts:
+  provider: edge
+  edge:
+    voice: hu-HU-TiborNeural
+providers:
+  opencode-zen-art:
+    api_key: ${OPENCODE_GO_API_KEY}
+    api_mode: chat_completions
+    base_url: https://opencode.ai/zen/v1
+    default_model: big-pickle
+    display_name: OpenCode Zen ART
+  opencode-go-art:
+    api_key: ${OPENCODE_GO_ART_API_KEY}
+    api_mode: chat_completions
+    base_url: https://opencode.ai/zen/go/v1
+    default_model: minimax-m3-free
+    display_name: OpenCode Go ART (Minimax 3)
+telegram:

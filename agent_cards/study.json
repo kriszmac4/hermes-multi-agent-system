@@ -1,0 +1,56 @@
+{
+    "name": "study",
+    "display_name": "Study Agent",
+    "description": "Law school (PPKE JOG) study assistant — exam prep, active recall, spaced repetition. Also handles DevOps questions and Fitness/training analysis. Unified specialist for study + devops + fitness.",
+    "version": "2.0.0",
+    "skills": [
+        {
+            "id": "exam-prep",
+            "description": "Prepare structured exam answers (PPKE jogi, tételkidolgozás)",
+            "keywords": [
+                "vizsga", "exam", "tétel", "kidolgozás", "dolgozat",
+                "zh", "prepare", "polgári perrendtartás", "büntetőjog",
+                "alkotmányjog", "magyar jog"
+            ],
+            "examples": [
+                "dolgozd ki a Büntetőjog 3. tételt",
+                "készüljünk a polgári perrendtartás vizsgára"
+            ]
+        },
+        {
+            "id": "recap-session",
+            "description": "Run an active-recall recap session on a topic",
+            "keywords": [
+                "ismétlés", "recap", "active recall", "spaced repetition",
+                "átismétlés", "kikérdezés", "teszt"
+            ]
+        },
+        {
+            "id": "devops-ops",
+            "description": "DevOps, infrastructure, deployment, Docker, CI/CD tasks",
+            "keywords": [
+                "devops", "deploy", "infra", "CI/CD", "docker",
+                "systemd", "infrastruktúra", "környezet", "pipeline"
+            ]
+        },
+        {
+            "id": "fitness-analysis",
+            "description": "Training analysis, performance review, recovery advice",
+            "keywords": [
+                "edzés", "fitness", "teljesítmény", "recovery",
+                "training", "eredmény", "sport", "gyakorlat"
+            ]
+        }
+    ],
+    "capabilities": [
+        "study", "exam_prep", "active_recall", "spaced_repetition",
+        "devops", "fitness", "training_analysis"
+    ],
+    "toolsets": ["web", "browser", "search", "terminal", "file"],
+    "model": "big-pickle",
+    "autonomy_level": 2,
+    "smart_approval": false,
+    "is_fallback": false,
+    "channels": ["discord/study", "discord/devops", "discord/fitness", "discord/team", "discord/human", "discord/general"],
+    "bus_address": "study"
+}

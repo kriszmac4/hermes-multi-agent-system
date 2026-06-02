@@ -1,0 +1,35 @@
+model:
+  persist_default: true
+  default: glm-5.1
+  provider: opencode-go-art
+  base_url: https://opencode.ai/zen/go/v1
+discord:
+  token: ${DISCORD_RESEARCH_TOKEN}
+  require_mention: true
+  auto_thread: true
+  free_response_channels: ''
+  allowed_channels: 1501147842595655721,1501148016713793588,1501148027417792652,1501148038117330995,1501617834952888455,1501633520563654716,1504006733826232521
+agent:
+  reasoning_effort: high
+  max_turns: 60
+approvals:
+  mode: false
+  cron_mode: auto
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+providers:
+  opencode-zen-art:
+    api_key: ${OPENCODE_GO_API_KEY}
+    api_mode: chat_completions
+    base_url: https://opencode.ai/zen/v1
+    default_model: big-pickle
+    display_name: OpenCode Zen ART
+  opencode-go-art:
+    api_key: ${OPENCODE_GO_ART_API_KEY}
+    api_mode: chat_completions
+    base_url: https://opencode.ai/zen/go/v1
+    default_model: minimax-m3-free
+    display_name: OpenCode Go ART (Minimax 3)
+telegram:
+  enabled: false

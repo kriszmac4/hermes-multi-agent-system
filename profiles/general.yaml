@@ -1,0 +1,77 @@
+model:
+  persist_default: true
+  default: glm-5.1
+  provider: opencode-go-art
+  base_url: https://opencode.ai/zen/go/v1
+discord:
+  token: ${DISCORD_GENERAL_TOKEN}
+  require_mention: true
+  auto_thread: true
+  free_response_channels: ''
+  allowed_channels: 1501148038117330995,1501148016713793588,1501617834952888455,1501633520563654716
+agent:
+  reasoning_effort: high
+  max_turns: 60
+approvals:
+  mode: smart
+  cron_mode: auto
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+mcp_servers:
+  marveen:
+    command: python3
+    args:
+    - /home/artofphotogrphyy/.hermes/scripts/marveen_mcp_server.py
+    env:
+      HERMES_HOME: /home/artofphotogrphyy/.hermes
+    connect_timeout: 5
+    timeout: 30
+  hermes-memory:
+    command: /home/artofphotogrphyy/.hermes/.venv/bin/python3
+    args:
+    - /home/artofphotogrphyy/.hermes/memory/mcp_server.py
+    connect_timeout: 5
+    timeout: 30
+  notebooklm:
+    command: /home/artofphotogrphyy/.hermes/scripts/notebooklm-mcp-wrapper.sh
+    connect_timeout: 15
+    timeout: 300
+onboarding:
+  seen:
+    busy_input_prompt: true
+voice:
+  auto_tts: true
+  beep_enabled: true
+  max_recording_seconds: 120
+  record_key: ctrl+b
+  silence_duration: 3.0
+  silence_threshold: 200
+stt:
+  enabled: true
+  provider: local
+  local:
+    model: medium
+    language: hu
+tts:
+  provider: edge
+  edge:
+    voice: hu-HU-TiborNeural
+providers:
+  opencode-zen-art:
+    api_key: ${OPENCODE_GO_API_KEY}
+    api_mode: chat_completions
+    base_url: https://opencode.ai/zen/v1
+    default_model: big-pickle
+    display_name: OpenCode Zen ART
+  opencode-go-art:
+    api_key: ${OPENCODE_GO_ART_API_KEY}
+    api_mode: chat_completions
+    base_url: https://opencode.ai/zen/go/v1
+    default_model: minimax-m3-free
+    display_name: OpenCode Go ART (Minimax 3)
+telegram:
+  enabled: true
+  reactions: false
+  channel_prompts: {}
+  allowed_chats: '717405081'

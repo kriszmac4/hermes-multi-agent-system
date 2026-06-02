@@ -1,23 +1,67 @@
 {
+  "version": "4.0.0",
+  "description": "Hermes Multi-Agent System v4 — 4 agents, Telegram+Discord, Marveen Bus, Mnemosyne Memory",
   "server_id": "1501144914333925376",
-  "channels": {
-    "research": "1501147842595655721",
-    "dev": "1501148006219776002",
-    "devops": "1501148027417793588",
-    "news": "1501148027417792652",
-    "general": "1501148038117330995",
-    "study": "1501188232807972905",
-    "human": "1501617834952888455",
-    "team": "1501633520563654716",
-    "fitness": "1502328792788762694"
+  "agents": {
+    "general": {
+      "model": "glm-5.1",
+      "provider": "opencode-go-art",
+      "gateway": ["telegram", "discord"],
+      "bus_address": "general",
+      "autonomy_level": 3,
+      "channels": {
+        "telegram_dm": "717405081",
+        "discord_general": "1501148038117330995",
+        "discord_team": "1501633520563654716",
+        "discord_human": "1501617834952888455"
+      }
+    },
+    "dev": {
+      "model": "big-pickle",
+      "provider": "opencode-zen-art",
+      "gateway": ["discord"],
+      "bus_address": "dev",
+      "autonomy_level": 3,
+      "channels": {
+        "discord_dev": "1501148006219776002",
+        "discord_team": "1501633520563654716",
+        "discord_general": "1501148038117330995"
+      }
+    },
+    "research": {
+      "model": "glm-5.1",
+      "provider": "opencode-go-art",
+      "gateway": ["discord"],
+      "bus_address": "research",
+      "autonomy_level": 3,
+      "channels": {
+        "discord_research": "1501147842595655721",
+        "discord_team": "1501633520563654716",
+        "discord_general": "1501148038117330995"
+      }
+    },
+    "study": {
+      "model": "big-pickle",
+      "provider": "opencode-zen-art",
+      "gateway": ["discord"],
+      "bus_address": "study",
+      "autonomy_level": 2,
+      "channels": {
+        "discord_study": "1501188232807972905",
+        "discord_devops": "1501617834952888455",
+        "discord_fitness": "1502328792788762694",
+        "discord_team": "1501633520563654716"
+      }
+    }
   },
-  "tokens": {
-    "research": "${DISCORD_TOKEN_RESEARCH}",
-    "dev": "${DISCORD_TOKEN_DEV}",
-    "devops": "${DISCORD_TOKEN_DEVOPS}",
-    "news": "${DISCORD_TOKEN_NEWS}",
-    "general": "${DISCORD_TOKEN_GENERAL}",
-    "study": "${DISCORD_TOKEN_STUDY}",
-    "fitness": "${DISCORD_TOKEN_FITNESS}"
+  "message_bus": {
+    "type": "sqlite_wal",
+    "path": "~/.hermes/data/marveen/agent_messages.db",
+    "cleanup_hours": 72
+  },
+  "memory": {
+    "type": "mnemosyne",
+    "backend": "sqlite_vec_fts5",
+    "path": "~/.hermes/data/memory.db"
   }
 }

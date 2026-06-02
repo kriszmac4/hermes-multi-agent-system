@@ -1,8 +1,11 @@
+# Hermes Multi-Agent System v4
 __pycache__/
 *.pyc
-*.db
+*.pyo
 .env
-data/
-tasks.json
-development.json
-token_logger.py
+*.db
+*.db-wal
+*.db-shm
+dreams/
+*.log
+.DS_Store

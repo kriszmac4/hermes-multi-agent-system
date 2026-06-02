@@ -1,0 +1,57 @@
+model:
+  persist_default: true
+  default: minimax-m3-free
+  provider: opencode-zen-art
+  auxiliary:
+    model: big-pickle
+    provider: opencode-zen
+  base_url: https://opencode.ai/zen/v1
+discord:
+  token: ${DISCORD_DEV_TOKEN}
+  require_mention: true
+  auto_thread: true
+  free_response_channels: ''
+  allowed_channels: 1501148038117330995,1501148006219776002,1501148016713793588,1501617834952888455,1501633520563654716,1502057044474335382,1504006627697754124,1504006672979464314,1504006733826232521
+agent:
+  reasoning_effort: low
+  max_turns: 60
+approvals:
+  mode: smart
+  cron_mode: auto
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+onboarding:
+  seen:
+    tool_progress_prompt: true
+    busy_input_prompt: true
+providers:
+  opencode-zen-art:
+    api_key: ${OPENCODE_GO_API_KEY}
+    api_mode: chat_completions
+    base_url: https://opencode.ai/zen/v1
+    default_model: big-pickle
+    display_name: OpenCode Zen ART
+  opencode-go-art:
+    api_key: ${OPENCODE_GO_ART_API_KEY}
+    api_mode: chat_completions
+    base_url: https://opencode.ai/zen/go/v1
+    default_model: minimax-m3-free
+    display_name: OpenCode Go ART (Minimax 3)
+telegram:
+  enabled: false
+mcp_servers:
+  marveen:
+    command: python3
+    args:
+    - /home/artofphotogrphyy/.hermes/scripts/marveen_mcp_server.py
+    env:
+      HERMES_HOME: /home/artofphotogrphyy/.hermes
+    connect_timeout: 5
+    timeout: 30
+  hermes-memory:
+    command: /home/artofphotogrphyy/.hermes/.venv/bin/python3
+    args:
+    - /home/artofphotogrphyy/.hermes/memory/mcp_server.py
+    connect_timeout: 5
+    timeout: 30

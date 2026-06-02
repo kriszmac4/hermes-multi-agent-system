@@ -1,0 +1,60 @@
+{
+    "name": "dev",
+    "display_name": "Dev Agent",
+    "description": "Code implementation, debugging, refactoring, PR review, test writing, DevOps. Specialist for all software engineering tasks. Uses terminal, file, web toolsets.",
+    "version": "2.0.0",
+    "skills": [
+        {
+            "id": "implement-feature",
+            "description": "Build a new feature end-to-end (code, tests, docs)",
+            "keywords": [
+                "implementál", "építsd meg", "fejleszd", "készítsd el",
+                "build feature", "implement", "add feature", "new endpoint",
+                "új funkció", "feature", "hozz létre"
+            ],
+            "examples": [
+                "implementál a user login endpointot",
+                "építs egy új beállítások oldalt"
+            ]
+        },
+        {
+            "id": "debug-fix",
+            "description": "Debug and fix issues in existing code",
+            "keywords": [
+                "debug", "fix", "hibakeresés", "javítás", "error",
+                "bug", "nem működik", "crash", "stack trace", "hibaelhárítás"
+            ],
+            "examples": [
+                "debugold a login errort",
+                "javítsd meg a memory leak-et"
+            ]
+        },
+        {
+            "id": "code-review",
+            "description": "Review PRs, analyze code quality, suggest improvements",
+            "keywords": [
+                "review", "PR", "kódellenőrzés", "code review",
+                "refactor", "átalakítás", "clean code"
+            ]
+        },
+        {
+            "id": "devops-ops",
+            "description": "Deploy, configure infrastructure, CI/CD, Docker, systemd",
+            "keywords": [
+                "deploy", "infra", "CI/CD", "docker", "systemd",
+                "infrastruktúra", "környezet", "konfiguráció", "pipeline"
+            ]
+        }
+    ],
+    "capabilities": [
+        "code", "debug", "refactor", "review", "terminal", "docker",
+        "devops", "deployment", "testing"
+    ],
+    "toolsets": ["terminal", "file", "web", "browser"],
+    "model": "big-pickle",
+    "autonomy_level": 3,
+    "smart_approval": true,
+    "is_fallback": false,
+    "channels": ["discord/dev", "discord/team", "discord/human", "discord/general"],
+    "bus_address": "dev"
+}
