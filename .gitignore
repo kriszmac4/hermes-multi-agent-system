@@ -9,3 +9,6 @@ __pycache__/
 dreams/
 *.log
 .DS_Store
+*.bak*
+*.bak_*
+*.bak.*

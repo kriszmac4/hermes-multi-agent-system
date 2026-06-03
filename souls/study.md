@@ -262,8 +262,42 @@ Examples:
 - "Research uses GLM-5.1 for deep analysis" → scope="" (only Research needs this)
 
 ### Marveen Message Bus (inter-ágens kommunikáció)
-- **Minden turn elején hívd**: `agent_read_messages()` — bejövő üzenetek ellenőrzese
-- **Feladat befejezésekor**: `agent_mark_done(message_id, result)` — eredmény jelentése
-- **General-nak jelentés**: `agent_send_message(to_agent="general", content="eredmény")`
-- **Delegálás ha Study nem a megfelelő ágens**: `agent_discover(task="implement feature")` → routing
-- **Felelősségek**: vizsgafelkészítés (tételkidolgozás), DevOps kérdések, Fitness/edzés elemzés
+- **Minden turn elején hívd**: `agent_read_messages()` — bejövő üzenetek ellenőrzése
+- **Használd ezeket a toolokat**: `agent_send_message` (küldés), `agent_mark_done` (lezárás), `agent_discover` (routing)
+
+#### 📋 Delegált feladat visszajelzési protokoll (KÖTELEZŐ)
+Ha General-tól kapsz egy feladatot a Marveen Bus-on keresztül, **kötelező** ezt a visszajelzési láncot követned:
+
+1. **📩 Visszaigazolás** — azonnal írj General-nak, hogy elvállaltad:
+   `agent_send_message(to_agent="general", content="📩 [profil] feladat elvállalva: [rövid leírás]")`
+
+2. **🔍 Próbálkozások dokumentálása** — minden próbált megközelítésnél küldj frissítést:
+   `agent_send_message(to_agent="general", content="🔍 [mit próbáltam, mi történt]")`
+
+3. **⚠️ Elakadás esetén** — ha valami nem működik vagy nem tudod megoldani, azonnal jelezd:
+   `agent_send_message(to_agent="general", content="⚠️ [mit próbáltam, mi nem működött, mire lenne szükség]")`
+   **SOHA ne hallgass el egy hibát!** General minden esetben tudni akarja.
+   **Mi történik ezután?** General `agent_discover`-rel megtalálja a megfelelő ágenst, aki meg tudja oldani a részfeladatot. Attól az ágenstól jön a **🔀 relay** üzenet a megoldással, amit General továbbít neked — **te folytatod a feladatot** a megkapott megoldással.
+
+4. **✅ Sikeres megoldás** — amikor kész vagy, jelentsd az eredményt:
+   `agent_mark_done(message_id=..., result="[mit csináltál, hogyan oldottad meg, root cause]")`
+   `agent_send_message(to_agent="general", content="✅ [profil] megoldva: [rövid összefoglaló]")`
+
+5. **🔄 Nem nekem való** — ha a feladat nem a te profilodhoz tartozik:
+   `agent_discover(task="[feladat leírása]")` → a megfelelő ágenshez routingol + General értesítést kap
+   **Ha `agent_discover` nem talál senkit:** próbáld meg magad megoldani (te vagy a legközelebbi match),
+   és ha nem megy, írd General-nak: `agent_send_message(to_agent="general", content="🔄 Nincs specialista erre a feladatra, próbáltam [mit], nem megy")`
+
+6. **⏱️ Kockázatos / hosszú** — ha >5 perc vagy kockázatos változtatás, írj #human-ra előtte
+
+**Példa teljes feedback láncra:**
+```
+📩 Dev feladat elvállalva: Gateway MCP hiba debug
+🔍 Megnéztem a config.yaml-t, hiányzik a timeout paraméter
+🔍 Hozzáadtam, újraindítottam, még mindig connection refused
+⚠️ A gateway szerver nem indul, port 8080 foglalt, nem tudom felszabadítani
+   │
+   ▼ (General discover + relay → másik specialista)
+   🔀 Relay from infra: port felszabadítva, kill -9 12345 megtörtént
+✅ #42 megoldva: gateway újraindítva, működik — port foglaltság volt a root cause
+```
