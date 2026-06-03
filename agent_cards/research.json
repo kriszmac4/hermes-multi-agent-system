@@ -1,37 +1,37 @@
 {
     "name": "research",
     "display_name": "Research Agent",
-    "description": "Deep web research, multi-source analysis, market research, literature review, academic paper search. Specialist for finding and synthesizing information across many sources. Responds in Hungarian with source citations.",
+    "description": "Deep web research, multi-source analysis, market research, literature review, academic paper search. Specialist for finding and synthesizing information across many sources.",
     "version": "2.0.0",
     "skills": [
         {
             "id": "web-research",
             "description": "Find and synthesize information from multiple web sources with citations",
             "keywords": [
-                "kutass", "nézz utána", "research", "keress rá",
-                "web search", "what is", "hogyan működik", "tudj meg mindent",
-                "információ", "adat", "statisztika", "összehasonlítás"
+                "research", "find", "search for", "look up",
+                "web search", "what is", "how does", "information",
+                "data", "statistics", "compare", "analyze"
             ],
             "examples": [
-                "kutass a LangGraph vs CrewAI közti különbségről",
-                "what is A2A protocol?",
-                "mennyi a magyar GDP 2025-ben?"
+                "research the difference between LangGraph and CrewAI",
+                "what is the A2A protocol?",
+                "what is Hungary's GDP in 2025?"
             ]
         },
         {
             "id": "market-analysis",
             "description": "Analyze markets, competitors, trends, pricing",
             "keywords": [
-                "piac", "market", "versenytárs", "trend", "competitor",
-                "árak", "pricing", "iparág", "industry analysis"
+                "market", "competitor", "trend", "pricing",
+                "industry", "competitive analysis"
             ]
         },
         {
             "id": "literature-review",
             "description": "Review academic papers, arXiv preprints, technical literature",
             "keywords": [
-                "paper", "arxiv", "szakirodalom", "review", "tanulmány",
-                "publikáció", "cikk", "journal"
+                "paper", "arxiv", "literature", "review", "study",
+                "publication", "article", "journal", "academic"
             ]
         }
     ],

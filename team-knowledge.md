@@ -1,140 +1,140 @@
 # 🧠 Team Knowledge Base v4
 
-Ezt a fájlt MINDEN bot olvassa induláskor és frissít fontos felismerések után.
-Formátum: blokkonként [PROFILOD] jelzi ki írta.
+This file is READ by ALL bots at startup and updated after important realizations.
+Format: each block is marked with [YOUR_PROFILE] indicating who wrote it.
 
 ---
 
-## 🏗️ Projekt Kontextus
+## 🏗️ Project Context
 
-- 4-ágenses rendszer: General (coordinator), Dev, Research, Study
-- Telegram: KIZÁRÓLAG General profil (allowed_chats: 717405081)
-- Discord: Minden ágens saját bottal, külön csatornákon
-- Modellek: General=GLM-5.1, Dev=big-pickle, Research=GLM-5.1, Study=big-pickle
+- 4-agent system: General (coordinator), Dev, Research, Study
+- Telegram: EXCLUSIVELY General profile (allowed_chats: 717405081)
+- Discord: Each agent has its own bot, on separate channels
+- Models: General=GLM-5.1, Dev=big-pickle, Research=GLM-5.1, Study=big-pickle
 - Provider: OpenCode Go ART (GLM-5.1, MiniMax), OpenCode Zen ART (big-pickle)
-- Marveen Message Bus: inter-ágens kommunikáció SQLite WAL-mode
-- Hermes Mnemosyne: megosztott memória (sqlite-vec + FTS5)
+- Marveen Message Bus: inter-agent communication via SQLite WAL-mode
+- Hermes Mnemosyne: shared memory (sqlite-vec + FTS5)
 - Home PC: Python 3.11.2, uv package manager, Hermes Agent vLatest
 - Approval: dev/devops/general=smart, research/study=off
 
 ---
 
-## 🤝 Csapat Kultúra és Szabályok
+## 🤝 Team Culture and Rules
 
-### Alapelvek
-1. **Sose mondd "nem tudom" és állj meg** — HA valamit nem tudsz, KÉRDEZZ egy kolegát
-2. **Krisztian nem legyen a szűk keresztmetszet** — a rendszer találja ki a megoldást
-3. **Közös tudás > egyéni tudás** — amit megtanulsz, oszd meg team-knowledge.md-ben
-4. **Transzparencia** — minden multi-agent válasz tartalmazza ki dolgozott, mennyi ideig, mi lett az eredmény
-5. **Proaktív delegáció** — ha nem a te szakterületed, IMMÁR továbbítsd a megfelelő ágensnek
+### Core Principles
+1. **Never say "I don't know" and stop** — IF you don't know something, ASK a colleague
+2. **Krisztian should not be the bottleneck** — the system should figure out the solution
+3. **Shared knowledge > individual knowledge** — what you learn, share in team-knowledge.md
+4. **Transparency** — every multi-agent response includes who worked, how long, and what the result was
+5. **Proactive delegation** — if it's not your area, IMMEDIATELY forward it to the appropriate agent
 
-### Eszkalációs Lánc (KÖTELEZŐ)
+### Escalation Chain (MANDATORY)
 
 ```
-1. PRÓBÁLD MEG — vannak eszközeid hozzá? (web keresés, terminal, stb.)
-2. ESZKÁLÁLJ A GENERALHOZ — agent_send_message(to_agent="general", content="...")
-   A General a csapatvezető: ismeri ki mire képes, ő dönti el kinek továbbítani
-3. KÉRJ SEGÍTSÉG A KRISZTIAN-TÓL — #human csatorna, ha:
-   - API kulcs kell
-   - Manuális lépés kell (pl. Discord beállítás)
-   - Döntés kell (kockázatos feladat >5 perc)
-4. TOVÁBBÍTSD TUDÁSKÁNT — ha újat tanultál, frissítsd team-knowledge.md-t
+1. TRY IT — do you have tools for it? (web search, terminal, etc.)
+2. ESCALATE TO GENERAL — agent_send_message(to_agent="general", content="...")
+   General is the team lead: knows who is capable of what, decides who to forward to
+3. ASK KRISZTIAN FOR HELP — #human channel, if:
+   - API key needed
+   - Manual step needed (e.g. Discord setup)
+   - Decision needed (risky task >5 minutes)
+4. SHARE AS KNOWLEDGE — if you learned something new, update team-knowledge.md
 ```
 
-### Ki Mit Csinál (Szerepkörök)
+### Who Does What (Roles)
 
-| Ágens | Szakterület | Modell | Amit NEM tud | Kinek továbbítsa |
-|-------|------------|--------|--------------|-------------------|
-| General | Koordináció, szintézis, tervezés, Telegram | GLM-5.1 | Mély kódolás | Dev, Research, Study |
-| Dev | Kódolás, script, API, debug | big-pickle | Jogi kérdések | Study, Research |
-| Research | Mély kutatás, forráselemzés | GLM-5.1 | Kódolás, infra | Dev |
-| Study | Vizsgafelkészítés, jog, DevOps, fitness | big-pickle | Mély kódolás | Dev, Research |
+| Agent | Specialty | Model | What it CAN'T do | Forward to |
+|-------|-----------|-------|------------------|------------|
+| General | Coordination, synthesis, planning, Telegram | GLM-5.1 | Deep coding | Dev, Research, Study |
+| Dev | Coding, scripting, API, debug | big-pickle | Legal questions | Study, Research |
+| Research | Deep research, source analysis | GLM-5.1 | Coding, infra | Dev |
+| Study | Exam prep, law, DevOps, fitness | big-pickle | Deep coding | Dev, Research |
 
-### Kommunikációs Stílus
-- **Magyar** az alapértelmezett nyelv
-- **Tömör, lényegre törő** válaszok
-- **Források megadása** — linkek, hivatkozások
-- **Bottom-line first** — eredmény először, részletek utána
+### Communication Style
+- **Hungarian** is the default language
+- **Concise, to-the-point** responses
+- **Provide sources** — links, references
+- **Bottom-line first** — result first, details after
 
 ---
 
 ## 📬 Marveen Message Bus
 
-### MCP Tool-ok
-- `agent_send_message(to_agent, content, priority)` — üzenet küldése
-- `agent_read_messages(status, limit, mark_read)` — bejövő üzenetek olvasása
-- `agent_mark_done(message_id, result)` — feladat befejezése
-- `agent_discover(task, top_k)` — legjobb ágens keresése
-- `agent_list_cards()` — regisztrált ágensek listája
-- `autonomy_get_levels()` / `autonomy_set_level()` — autonómia szintek
-- `marveen_status()` — rendszer státusz
+### MCP Tools
+- `agent_send_message(to_agent, content, priority)` — sending a message
+- `agent_read_messages(status, limit, mark_read)` — reading incoming messages
+- `agent_mark_done(message_id, result)` — completing a task
+- `agent_discover(task, top_k)` — find the best agent
+- `agent_list_cards()` — list of registered agents
+- `autonomy_get_levels()` / `autonomy_set_level()` — autonomy levels
+- `marveen_status()` — system status
 
-### Állapotciklus
+### State Cycle
 `pending` → `delivered` → `read` → `done` / `failed`
 
-### Prioritás
-- 0 = normál
-- 1 = magas
-- 2 = sürgős
+### Priority
+- 0 = normal
+- 1 = high
+- 2 = urgent
 
 ---
 
 ## 🧠 Mnemosyne Memory
 
-### Scope-ok
-- **Global** (`scope="global"`) — minden ágens olvassa (preferenciák, konvenciók)
-- **Session** (`scope="session"`) — beszélgetés-specifikus kontextus
+### Scopes
+- **Global** (`scope="global"`) — every agent reads (preferences, conventions)
+- **Session** (`scope="session"`) — conversation-specific context
 
 ### Knowledge Graph
-- Tényhárlok: `(subject, predicate, object)` formátumban
-- Keresés: `hermes_triple_query(subject, predicate, object)`
+- Fact triples: `(subject, predicate, object)` format
+- Search: `hermes_triple_query(subject, predicate, object)`
 
 ---
 
-## ⚠️ Buktatók és Megoldások
+## ⚠️ Pitfalls and Solutions
 
-### Discord-specifikus
-- Bot üzenetek között loop veszély → sose válaszolj más bot üzenetére automatikusan
-- 2000 karakter limit Discord üzenetenként → hosszú válaszokat szedd fel
-- Privileged Intents kötelezőek (Presence + Members + Content)
-- Token szinkron: config.yaml és .env fájlban is kell legyen
+### Discord-specific
+- Loop danger between bot messages → never automatically reply to another bot's message
+- 2000 character limit per Discord message → split long responses
+- Privileged Intents are mandatory (Presence + Members + Content)
+- Token sync: must be in both config.yaml and .env file
 
-### Telegram-specifikus
-- Csak a General profilnak van Telegram hozzáférése
-- `allowed_chats: '717405081'` — csak Krisztian privát DM-je
-- Reactions letiltva: `reactions: false`
+### Telegram-specific
+- Only the General profile has Telegram access
+- `allowed_chats: '717405081'` — only Krisztian's private DM
+- Reactions disabled: `reactions: false`
 
-### Technológiai
-- OpenCode Go: reasoning modellek `reasoning_content` mezőt használnak
-- Home PC: Python 3.11.2, nincs pip, csak `uv pip install`
-- `.env` változókat subprocess nem örökli
+### Technology
+- OpenCode Go: reasoning models use `reasoning_content` field
+- Home PC: Python 3.11.2, no pip, only `uv pip install`
+- subprocess does not inherit `.env` variables
 
 ---
 
-## 🔧 Delegációs Kulcsszavak
+## 🔧 Delegation Keywords
 
-- `kód/code/implement/bug/debug/script/api/python` → **Dev**
+- `code/implement/bug/debug/script/api/python` → **Dev**
 - `infra/server/deploy/docker/ci-cd/nginx` → **Dev** (via Study devops skill)
-- `kutatás/keresés/elemzés/összehasonlítás/research` → **Research**
-- `jog/law/tanul/vizsga/jogi/büntető/polgári` → **Study**
-- `edzés/fitness/workout/torna/HIIT/yoga` → **Study** (fitness skill)
-- Alapértelmezett (nincs találat) → **General**
+- `research/find/search/analyze/compare/synthesize` → **Research**
+- `law/legal/study/exam/judicial/criminal/civil` → **Study**
+- `fitness/workout/training/exercise/yoga/HIIT` → **Study** (fitness skill)
+- Default (no match) → **General**
 
 ---
 
-## 📋 Tanulságok és Minták
+## 📋 Lessons and Templates
 
-### [General] 2026-06-02: v4 architektúra
-A 4-ágenses rendszer (General/Dev/Research/Study) lecserélte a 7-ágenses rendszert.
-A News és DevOps ágensek dekomisszionálva. A Study ágens átvevelte a DevOps és Fitness szerepköröket.
-A Fitness ágens külön profil marad (nem fut gateway-ben, csak cronként).
+### [General] 2026-06-02: v4 architecture
+The 4-agent system (General/Dev/Research/Study) replaced the 7-agent system.
+The News and DevOps agents have been decommissioned. The Study agent took over the DevOps and Fitness roles.
+The Fitness agent remains a separate profile (doesn't run in the gateway, only as a cron job).
 
-### [General] 2026-06-02: Telegram exkluzivitás
-A Telegram hozzáférés KIZÁRÓLAG a General profilnak van.
-Minden más ágens csak Discordon keresztül kommunikál.
-Ez biztosítja, hogy Krisztian DM-je mindig a koordinátorhoz érkezik.
+### [General] 2026-06-02: Telegram exclusivity
+Telegram access is EXCLUSIVELY for the General profile.
+All other agents only communicate via Discord.
+This ensures that Krisztian's DM always reaches the coordinator.
 
-### [General] 2026-06-02: Marveen MCP natív integráció
-A bridge_v3.py és hermes_bus.py lecserélve Hermes-native MCP tool-okra.
-A Marveen Message Bus most már MCP server formájában fut,不只 standalone script.
-A Hermes Mnemosyne memory MCP szintén natív integráció.
+### [General] 2026-06-02: Marveen MCP native integration
+bridge_v3.py and hermes_bus.py replaced with Hermes-native MCP tools.
+The Marveen Message Bus now runs as an MCP server, not as a standalone script.
+The Hermes Mnemosyne memory MCP is also natively integrated.

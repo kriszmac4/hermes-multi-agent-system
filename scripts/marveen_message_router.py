@@ -163,7 +163,7 @@ def main():
     
     # --- Output for Discord delivery (watchdog pattern) ---
     if discord_messages:
-        lines = [f"📬 **Marveen Bus — üzenet érkezett** {DISCORD_ROLE_MENTION}"]
+        lines = [f"📬 **Marveen Bus — new message received** {DISCORD_ROLE_MENTION}"]
         for msg in discord_messages[:5]:
             from_ = msg.get("from_agent", "?")
             content = msg.get("content", "")
@@ -172,7 +172,7 @@ def main():
                 preview += "..."
             lines.append(f"> **{from_}** → {preview}")
         if len(discord_messages) > 5:
-            lines.append(f"> ... és még {len(discord_messages) - 5} üzenet")
+            lines.append(f"> ... and {len(discord_messages) - 5} more messages")
         print("\n".join(lines))
         
     # Silent if nothing for orchestrator (watchdog pattern)

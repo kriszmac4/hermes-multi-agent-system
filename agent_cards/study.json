@@ -6,23 +6,23 @@
     "skills": [
         {
             "id": "exam-prep",
-            "description": "Prepare structured exam answers (PPKE jogi, tételkidolgozás)",
+            "description": "Prepare structured exam answers (PPKE law, topic elaboration)",
             "keywords": [
-                "vizsga", "exam", "tétel", "kidolgozás", "dolgozat",
-                "zh", "prepare", "polgári perrendtartás", "büntetőjog",
-                "alkotmányjog", "magyar jog"
+                "exam", "test", "prepare", "study for",
+                "civil procedure", "criminal law", "constitutional law",
+                "elaborate", "topic"
             ],
             "examples": [
-                "dolgozd ki a Büntetőjog 3. tételt",
-                "készüljünk a polgári perrendtartás vizsgára"
+                "elaborate Criminal Law topic 3",
+                "prepare for the civil procedure exam"
             ]
         },
         {
             "id": "recap-session",
             "description": "Run an active-recall recap session on a topic",
             "keywords": [
-                "ismétlés", "recap", "active recall", "spaced repetition",
-                "átismétlés", "kikérdezés", "teszt"
+                "recap", "review", "active recall", "spaced repetition",
+                "quiz", "test me", "flashcard", "practice"
             ]
         },
         {
@@ -30,15 +30,15 @@
             "description": "DevOps, infrastructure, deployment, Docker, CI/CD tasks",
             "keywords": [
                 "devops", "deploy", "infra", "CI/CD", "docker",
-                "systemd", "infrastruktúra", "környezet", "pipeline"
+                "systemd", "infrastructure", "pipeline", "server"
             ]
         },
         {
             "id": "fitness-analysis",
             "description": "Training analysis, performance review, recovery advice",
             "keywords": [
-                "edzés", "fitness", "teljesítmény", "recovery",
-                "training", "eredmény", "sport", "gyakorlat"
+                "fitness", "training", "workout", "recovery",
+                "exercise", "performance", "sport", "gym"
             ]
         }
     ],

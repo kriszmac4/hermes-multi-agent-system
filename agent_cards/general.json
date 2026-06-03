@@ -8,13 +8,13 @@
             "id": "task-routing",
             "description": "Analyze a request and route it to the best specialist agent(s)",
             "keywords": [
-                "route", " delegatedl", "terv", "tervez", "plan", "ki csinálja",
-                "melyik agent", "kinek küldjem", "delegálás"
+                "route", "delegate", "plan", "orchestrate", "coordinate",
+                "who should", "which agent", "send to", "assign"
             ],
             "examples": [
-                "kutass a piacról → research",
-                "implementálj egy feature-t → dev",
-                "dolgozd ki a tételt → study"
+                "research the market → research",
+                "implement a feature → dev",
+                "prepare exam material → study"
             ],
             "model_hint": "plan-mode"
         },
@@ -22,15 +22,15 @@
             "id": "result-synthesis",
             "description": "Combine outputs from multiple agents into one coherent response",
             "keywords": [
-                "foglald össze", "szintetizál", "kombinál", "egyesítsd",
-                "summarize results", "összefoglaló"
+                "summarize", "synthesize", "combine", "merge",
+                "summarize results", "collect", "aggregate"
             ]
         },
         {
             "id": "general-qa",
             "description": "Answer general knowledge questions directly without delegation",
             "keywords": [
-                "mi a", "mennyi", "hol van", "ki volt", "magyarázd el"
+                "what is", "how much", "where is", "who was", "explain"
             ]
         }
     ],

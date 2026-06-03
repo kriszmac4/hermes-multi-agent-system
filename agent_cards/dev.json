@@ -8,33 +8,33 @@
             "id": "implement-feature",
             "description": "Build a new feature end-to-end (code, tests, docs)",
             "keywords": [
-                "implementál", "építsd meg", "fejleszd", "készítsd el",
-                "build feature", "implement", "add feature", "new endpoint",
-                "új funkció", "feature", "hozz létre"
+                "implement", "build", "develop", "create", "add",
+                "new feature", "new endpoint", "write code", "feat"
             ],
             "examples": [
-                "implementál a user login endpointot",
-                "építs egy új beállítások oldalt"
+                "implement a user login endpoint",
+                "build a new settings page"
             ]
         },
         {
             "id": "debug-fix",
             "description": "Debug and fix issues in existing code",
             "keywords": [
-                "debug", "fix", "hibakeresés", "javítás", "error",
-                "bug", "nem működik", "crash", "stack trace", "hibaelhárítás"
+                "debug", "fix", "investigate", "error",
+                "bug", "crash", "stack trace", "troubleshoot",
+                "not working", "issue", "broken"
             ],
             "examples": [
-                "debugold a login errort",
-                "javítsd meg a memory leak-et"
+                "debug the login error",
+                "fix the memory leak"
             ]
         },
         {
             "id": "code-review",
             "description": "Review PRs, analyze code quality, suggest improvements",
             "keywords": [
-                "review", "PR", "kódellenőrzés", "code review",
-                "refactor", "átalakítás", "clean code"
+                "review", "PR", "code review", "code quality",
+                "refactor", "clean code", "improve"
             ]
         },
         {
@@ -42,7 +42,7 @@
             "description": "Deploy, configure infrastructure, CI/CD, Docker, systemd",
             "keywords": [
                 "deploy", "infra", "CI/CD", "docker", "systemd",
-                "infrastruktúra", "környezet", "konfiguráció", "pipeline"
+                "infrastructure", "configuration", "pipeline", "devops"
             ]
         }
     ],

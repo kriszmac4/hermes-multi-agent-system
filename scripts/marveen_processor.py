@@ -54,41 +54,41 @@ def respond_as_orchestrator(msg: dict) -> str:
     # Generic acknowledgment + specific response based on content
     if sender == "kanban":
         return (
-            "📋 **Orchestrator válasz:** Feladat ütemezve. "
-            "A kért kanban műveletet feldolgoztam. "
-            "Ha szükséges, jelezd a pontos paramétereket."
+            "📋 **Orchestrator response:** Task scheduled. "
+            "The requested kanban operation has been processed. "
+            "Specify the exact parameters if needed."
         )
     elif sender == "study":
         return (
-            "🎯 **Orchestrator válasz:** Tanulási feladat érkezett! "
-            f"Üzeneted: *{content[:200]}* "
-            "Feldolgozom és visszajelzek, amint elkészültem."
+            "🎯 **Orchestrator response:** Learning task received! "
+            f"Your message: *{content[:200]}* "
+            "I will process it and report back when done."
         )
     elif sender == "research":
         return (
-            "🔬 **Orchestrator válasz:** Kutatási kérés érkezett. "
-            f"Tartalom: *{content[:200]}* "
-            "Előkészítem a szükséges adatokat."
+            "🔬 **Orchestrator response:** Research task received. "
+            f"Content: *{content[:200]}* "
+            "Preparing necessary data."
         )
     elif sender == "news":
         return (
-            "📰 **Orchestrator válasz:** Hírekről szóló üzenet fogadva. "
+            "📰 **Orchestrator response:** News message received. "
             f"{content[:200]}"
         )
     elif sender == "dev":
         return (
-            "💻 **Orchestrator válasz:** Fejlesztői üzenet érkezett. "
-            f"Tartalom: *{content[:200]}* "
-            "Feldolgozom."
+            "💻 **Orchestrator response:** Developer message received. "
+            f"Content: *{content[:200]}* "
+            "Processing."
         )
     elif sender == "fitness":
         return (
-            "💪 **Orchestrator válasz:** Fitnesz adat érkezett. "
+            "💪 **Orchestrator response:** Fitness data received. "
             f"{content[:200]}"
         )
     else:
         return (
-            "📥 **Orchestrator válasz:** Üzenetedet fogadtam! "
+            "📥 **Orchestrator response:** Your message has been received! "
             f"([{sender}]) {content[:200]}"
         )
 
@@ -97,9 +97,9 @@ def respond_as_dev(msg: dict) -> str:
     """Respond as the dev agent."""
     content = msg.get("content", "").strip()
     return (
-        "🛠️ **Dev válasz:** A fejlesztési feladatot fogadtam. "
+        "🛠️ **Dev response:** Development task received. "
         f"*{content[:200]}* "
-        "Implementálom az igények szerint."
+        "I will implement according to requirements."
     )
 
 
@@ -107,9 +107,9 @@ def respond_as_research(msg: dict) -> str:
     """Respond as the research agent."""
     content = msg.get("content", "").strip()
     return (
-        "🔎 **Research válasz:** Kutatási feladat fogadva. "
+        "🔎 **Research response:** Research task received. "
         f"*{content[:200]}* "
-        "Elvégzem a szükséges kutatást."
+        "I will conduct the necessary research."
     )
 
 
@@ -117,9 +117,9 @@ def respond_as_study(msg: dict) -> str:
     """Respond as the study agent."""
     content = msg.get("content", "").strip()
     return (
-        "📚 **Study válasz:** Tanulási feladatot fogadtam. "
+        "📚 **Study response:** Learning task received. "
         f"*{content[:200]}* "
-        "Előkészítem a tananyagot."
+        "I will prepare the study materials."
     )
 
 
@@ -127,7 +127,7 @@ def respond_as_news(msg: dict) -> str:
     """Respond as the news agent."""
     content = msg.get("content", "").strip()
     return (
-        "📡 **News válasz:** Hírmegfigyelési kérés fogadva. "
+        "📡 **News response:** News monitoring request received. "
         f"*{content[:200]}*"
     )
 

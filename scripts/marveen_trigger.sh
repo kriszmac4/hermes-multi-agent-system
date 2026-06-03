@@ -39,11 +39,11 @@ with open('/tmp/marveen-trigger', 'w') as f:
 # Output summary
 print(f'📬 **Marveen Trigger** — $(date +\"%H:%M\")')
 for agent in sorted(agents):
-    print(f'  → **{agent}**: {counts[agent]} üzenet')
+    print(f'  → **{agent}**: {counts[agent]} message(s)')
 total = len(msgs)
 high_prio = sum(1 for m in msgs if m.get('priority', 0) >= 1)
 if high_prio:
-    print(f'  ⚡ Ebből {high_prio} magas prioritású')
+    print(f'  ⚡ {high_prio} high priority among them')
 ")
 
 EXIT_CODE=$?

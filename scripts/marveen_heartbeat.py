@@ -34,11 +34,11 @@ def check_message_queue() -> list[str]:
     old_pending = [m for m in pending if (time.time() - m["created_at"]) > 1800]  # 30+ min
     
     if old_pending:
-        issues.append(f"⚠️ {len(old_pending)} üzenet 30+ perce függőben")
+        issues.append(f"⚠️ {len(old_pending)} messages pending for 30+ minutes")
     
     # Check for queue buildup
     if len(pending) > 50:
-        issues.append(f"⚠️ {len(pending)} függőben lévő üzenet (torlódás)")
+        issues.append(f"⚠️ {len(pending)} pending messages (congestion)")
     
     return issues
 
@@ -48,17 +48,17 @@ def check_autonomy() -> list[str]:
     issues = []
     
     if not AUTONOMY_CONFIG.exists():
-        issues.append("❌ Autonómia config nem található")
+        issues.append("❌ Autonomy config not found")
         return issues
     
     cats = get_all_autonomy_categories()
     if not cats:
-        issues.append("⚠️ Nincsenek autonómia kategóriák")
+        issues.append("⚠️ No autonomy categories found")
     
     # Check for locked + high level (shouldn't happen)
     for c in cats:
         if c.get("locked") and c.get("level", 1) > c.get("maxLevel", 1):
-            issues.append(f"⚠️ '{c['label']}' zárolva de {c['level']}. szinten")
+            issues.append(f"⚠️ '{c['label']}' locked but at level {c['level']}")
     
     return issues
 
@@ -69,7 +69,7 @@ def check_dream_engine() -> list[str]:
     
     dreams = sorted(DREAMS_DIR.glob("*.md"), reverse=True)
     if not dreams:
-        issues.append("⏳ Dream Engine még nem futott le")
+        issues.append("⏳ Dream Engine hasn't run yet")
         return issues
     
     last_dream = dreams[0]
@@ -77,7 +77,7 @@ def check_dream_engine() -> list[str]:
     hours_since = (time.time() - last_time) / 3600
     
     if hours_since > 28:  # More than a day
-        issues.append(f"⏰ Dream Engine utoljára {hours_since:.0f} órája")
+        issues.append(f"⏰ Dream Engine last ran {hours_since:.0f} hours ago")
     
     return issues
 
@@ -94,7 +94,7 @@ def main():
     print(f"**💓 Marveen Heartbeat — {datetime.now(timezone.utc).strftime('%H:%M UTC')}**")
     for issue in issues:
         print(f"- {issue}")
-    print("\n_A heartbeat automatikusan fut óránként._")
+    print("\n_Heartbeat runs automatically every hour._")
     return 0
 
 

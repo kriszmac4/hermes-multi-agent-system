@@ -232,9 +232,9 @@ async def call_tool(name: str, arguments: dict) -> list[dict]:
                 "status": "sent",
                 "message_id": msg["id"],
                 "to_agent": to_agent,
-                "message": f"Üzenet elküldve: {to_agent} részére. "
-                          f"Az üzenet a következő alkalommal kerül kézbesítésre, "
-                          f"amikor {to_agent} ellenőrzi a bejövő üzeneteit."
+                "message": f"Message sent to {to_agent}. "
+                          f"It will be delivered when {to_agent} "
+                          f"checks their inbox.",
             })
 
         elif name == "agent_read_messages":
@@ -254,9 +254,9 @@ async def call_tool(name: str, arguments: dict) -> list[dict]:
                     mark_read(m["id"])
 
             if not msgs:
-                return _text_result("Nincs új üzenet.")
+                return _text_result("No new messages.")
 
-            lines = [f"📬 **Bejövő üzenetek ({len(msgs)})**:\n"]
+            lines = [f"📬 **Incoming messages ({len(msgs)})**:\n"]
             for m in msgs:
                 created = datetime.fromtimestamp(m["created_at"], tz=timezone.utc)
                 lines.append(
@@ -271,8 +271,8 @@ async def call_tool(name: str, arguments: dict) -> list[dict]:
             result = arguments.get("result", "")
             ok = mark_done(msg_id, result)
             if ok:
-                return _text_result(f"✅ #{msg_id} megjelölve done-ként.")
-            return _text_result(f"⚠️ #{msg_id} nem található vagy már lezárva.")
+                return _text_result(f"✅ #{msg_id} marked as done.")
+            return _text_result(f"⚠️ #{msg_id} not found or already closed.")
 
         elif name == "agent_discover":
             task = arguments["task"]
@@ -280,23 +280,23 @@ async def call_tool(name: str, arguments: dict) -> list[dict]:
             min_score = arguments.get("min_score", 1.0)
             matches = discover_agents(task, top_k=top_k, min_score=min_score)
             if not matches:
-                return _text_result("Nincs regisztrált Agent Card. Hozz létre egyet ~/.hermes/data/marveen/agent_cards/ alá.")
-            lines = [f"**🎯 Agent routing — top {len(matches)} találat**\n"]
+                return _text_result("No Agent Cards registered. Create one at ~/.hermes/data/marveen/agent_cards/.")
+            lines = [f"**🎯 Agent routing — top {len(matches)} results**\n"]
             for i, m in enumerate(matches, 1):
                 emoji = "🏆" if i == 1 else f"{i}."
                 lines.append(
                     f"{emoji} **{m['display_name']}** (`{m['agent']}`) — score: {m['score']}\n"
                     f"   🎯 skill: `{m['skill'] or '—'}`\n"
                     f"   💡 {m['reasoning']}\n"
-                    f"   🤖 model: {m['model']} | autonómia: {m['autonomy_level']}\n"
+                    f"   🤖 model: {m['model']} | autonomy: {m['autonomy_level']}\n"
                 )
             return _text_result("\n".join(lines))
 
         elif name == "agent_list_cards":
             cards = list_agent_cards()
             if not cards:
-                return _text_result("Nincs regisztrált Agent Card.")
-            lines = [f"**📚 Regisztrált Agent Card-ok ({len(cards)}):**\n"]
+                return _text_result("No Agent Cards registered.")
+            lines = [f"**📚 Registered Agent Cards ({len(cards)}):**\n"]
             for c in cards:
                 tag = " [fallback]" if c.get("is_fallback") else ""
                 skills = ", ".join(c.get("skills", [])[:5])
@@ -315,11 +315,11 @@ async def call_tool(name: str, arguments: dict) -> list[dict]:
             skill = arguments["skill"]
             task_excerpt = arguments.get("task_excerpt", "")
             record_skill_invocation(agent, skill, task_excerpt)
-            return _text_result(f"✅ Rögzítve: {agent} → {skill}")
+            return _text_result(f"✅ Recorded: {agent} → {skill}")
 
         elif name == "autonomy_get_levels":
             cats = get_all_autonomy_categories()
-            lines = ["**⚙️ Autonómia szintek:**\n"]
+            lines = ["**⚙️ Autonomy Levels:**\n"]
             for c in cats:
                 level = c["level"]
                 emoji = {1: "🔴", 2: "🟡", 3: "🟢"}.get(level, "⚪")
@@ -346,16 +346,16 @@ async def call_tool(name: str, arguments: dict) -> list[dict]:
                     label = c["label"]
                     break
             return _text_result(
-                f"Parancs: `{command[:100]}`\n"
-                f"Kategória: **{label}** ({cat})\n"
-                f"Autonómia szint: **{level}** "
-                f"({'autonóm' if level >= 3 else 'jóváhagyás kell' if level >= 2 else 'csak jelzés'})"
+                f"Command: `{command[:100]}`\n"
+                f"Category: **{label}** ({cat})\n"
+                f"Autonomy level: **{level}** "
+                f"({'autonomous' if level >= 3 else 'approval required' if level >= 2 else 'notify only'})"
             )
 
         elif name == "dream_get_last":
             dreams = sorted(DREAMS_DIR.glob("*.md"), reverse=True)
             if not dreams:
-                return _text_result("Még nincs Dream Engine jelentés. Az első ma éjjel (02:00 UTC) készül.")
+                return _text_result("No Dream Engine report yet. The first one will be generated tonight (02:00 UTC).")
             content = dreams[0].read_text()
             return _text_result(f"**🌙 Dream Engine — {dreams[0].stem}**\n\n{content}")
 
@@ -373,22 +373,22 @@ async def call_tool(name: str, arguments: dict) -> list[dict]:
             
             # Dream engine
             dreams = sorted(DREAMS_DIR.glob("*.md"), reverse=True)
-            last_dream = dreams[0].stem if dreams else "Még nincs"
+            last_dream = dreams[0].stem if dreams else "None yet"
             
             return _text_result(
                 "**📊 Marveen Integration Status**\n\n"
                 "**📬 Agent Message Bus**\n"
-                f"- Függőben lévő üzenetek: {len(pending)}\n"
-                f"- Kézbesítve, olvasatlan: {len(delivered)}\n"
-                f"- Teljesítve ma: {len(done_today)}\n\n"
-                "**⚙️ Autonómia**\n"
-                f"- 🟢 Autonóm (3): {level3} kategória\n"
-                f"- 🟡 Jóváhagyásos (2): {level2} kategória\n"
-                f"- 🔴 Csak jelzés (1): {level1} kategória\n"
-                f"- Összesen: {len(cats)} kategória\n\n"
+                f"- Pending messages: {len(pending)}\n"
+                f"- Delivered, unread: {len(delivered)}\n"
+                f"- Completed today: {len(done_today)}\n\n"
+                "**⚙️ Autonomy**\n"
+                f"- 🟢 Autonomous (3): {level3} categories\n"
+                f"- 🟡 Approval (2): {level2} categories\n"
+                f"- 🔴 Notify only (1): {level1} categories\n"
+                f"- Total: {len(cats)} categories\n\n"
                 "**🌙 Dream Engine**\n"
-                f"- Utolsó jelentés: {last_dream}\n"
-                f"- Kimenetek: {len(dreams)} éjszaka\n"
+                f"- Last report: {last_dream}\n"
+                f"- Nights archived: {len(dreams)}\n"
             )
 
         else:

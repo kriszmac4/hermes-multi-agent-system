@@ -1,8 +1,8 @@
 # 🏛️ Hermes Multi-Agent System v4
 
-> **4-ágenses intelligens rendszer** — Telegram + Discord multicommunication, agent-to-agent bus, shared memory, gradual autonomy.
+> **4-Agent Intelligent System** — Telegram + Discord multi-communication, agent-to-agent bus, shared memory, gradual autonomy.
 
-## Architektúra
+## Architecture
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
@@ -46,127 +46,127 @@
 └──────────────────────────────────────────────────────────────────────┘
 ```
 
-## Ágensek
+## Agents
 
-| Ágens | Modell | Szerep | Gateway | Csatornák |
+| Agent | Model | Role | Gateway | Channels |
 |-------|--------|--------|---------|-----------|
-| **General** | glm-5.1 | Orchesztrátor, routing, szintézis | Telegram + Discord | #general, #team, #human |
-| **Dev** | big-pickle | Kódolás, debug, refactoring, CI/CD | Discord | #dev, #team |
-| **Research** | glm-5.1 | Kutatás, forráselemzés, piackutatás | Discord | #research, #team |
-| **Study** | big-pickle | Vizsgafelkészítés, jog, DevOps, fitness | Discord | #study, #devops, #fitness |
+| **General** | glm-5.1 | Orchestrator, routing, synthesis | Telegram + Discord | #general, #team, #human |
+| **Dev** | big-pickle | Coding, debugging, refactoring, CI/CD | Discord | #dev, #team |
+| **Research** | glm-5.1 | Research, source analysis, market research | Discord | #research, #team |
+| **Study** | big-pickle | Exam preparation, law, DevOps, fitness | Discord | #study, #devops, #fitness |
 
-## Komponensek
+## Components
 
 ### 📬 Marveen Message Bus (`marveen/`)
 
-Inter-ágens kommunikációs rendszer SQLite WAL-mode adatbázissal.
+Inter-agent communication system with SQLite WAL-mode database.
 
 ```python
 from marveen import create_message, get_messages, mark_done, discover_agents
 
-# Üzenet küldése Dev-nek
+# Send message to Dev
 msg = create_message("general", "dev", "Implement API endpoint for X", priority=1)
 
-# Bejövő üzenetek olvasása
+# Read incoming messages
 messages = get_messages(to_agent="dev", status="pending")
 
-// Feladat befejezése
+// Complete task
 mark_done(msg_id, result="Done: pushed to feature/api-x")
 ```
 
-**Állapotciklus:** `pending` → `delivered` → `read` → `done` / `failed`
+**Status lifecycle:** `pending` → `delivered` → `read` → `done` / `failed`
 
-**MCP Server:** Az `agent_send_message`, `agent_read_messages`, `agent_mark_done`, `agent_discover` tool-ok expozálva Hermes profilokon keresztül.
+**MCP Server:** The `agent_send_message`, `agent_read_messages`, `agent_mark_done`, `agent_discover` tools are exposed through Hermes profiles.
 
 ### 🧠 Hermes Mnemosyne Memory (`memory/`)
 
-Háromrétegű megosztott memória SQLite + sqlite-vec + FTS5 backenddel.
+Three-layer shared memory with SQLite + sqlite-vec + FTS5 backend.
 
-- **Global scope** — minden ágens olvassa (preferenciák, konvenciók)
-- **Session scope** — beszélgetés-specifikus kontextus
-- **Knowledge Graph** — tényhárlok (subject-predicate-object)
-- **BEAM konszolidáció** — régi working memóriák → episodic summaries
+- **Global scope** — read by all agents (preferences, conventions)
+- **Session scope** — conversation-specific context
+- **Knowledge Graph** — fact triples (subject-predicate-object)
+- **BEAM consolidation** — old working memories → episodic summaries
 
 ### ⚙️ Gradual Autonomy (`autonomy-config.json`)
 
-15 kategóriás fokozatos autonómia rendszer:
-- 🔴 **Level 1** — csak jelzés (notify)
-- 🟡 **Level 2** — javaslat + emberi jóváhagyás
-- 🟢 **Level 3** — teljes autonómia
+15-category gradual autonomy system:
+- 🔴 **Level 1** — notify only
+- 🟡 **Level 2** — suggest + human approval
+- 🟢 **Level 3** — full autonomy
 
-Zárolt kategóriák: `git_force_push`, `email_send`, `payment`, `secret_access`
+Locked categories: `git_force_push`, `email_send`, `payment`, `secret_access`
 
 ### 🎯 Agent Cards (`agent_cards/`)
 
-JSON-alapú ágens regisztrációs kártyák, amiket a `discover_agents()` routing algoritmus használ:
+JSON-based agent registration cards used by the `discover_agents()` routing algorithm:
 
 ```json
 {
   "name": "dev",
   "display_name": "Dev Agent",
-  "skills": [{"id": "implement-feature", "keywords": ["implementál", "build"], ...}],
+  "skills": [{"id": "implement-feature", "keywords": ["implement", "build"], ...}],
   "model": "big-pickle",
   "autonomy_level": 3
 }
 ```
 
-A `discover_agents(task, top_k=3)` kulcsszó- és leírás-alapú pontozással_route-ol.
+The `discover_agents(task, top_k=3)` routes via keyword- and description-based scoring.
 
 ### 🌙 Dream Engine (`dreams/`)
 
-Éjszakai konszolidáció — 5 bucket:
-1. Skill javaslatok
-2. Memória health check
-3. Prioritások újraértékelése
-4. Külső opportunity-k
-5. Fleet health (ágens dostępność)
+Nightly consolidation — 5 buckets:
+1. Skill suggestions
+2. Memory health check
+3. Priority re-evaluation
+4. External opportunities
+5. Fleet health (agent availability)
 
-## Fájlstruktúra
+## File Structure
 
 ```
 hermes-multi-agent-system/
-├── README.md                          # Ez a fájl
-├── config.json                        # Discord csatorna & token térkép
-├── team-knowledge.md                  # Közös tudásbázis (minden ágens olvassa)
+├── README.md                          # This file
+├── config.json                        # Discord channel & token map
+├── team-knowledge.md                  # Shared knowledge base (read by all agents)
 ├── marveen/
-│   ├── __init__.py                    # Core modul (bus, autonomy, cards, discover)
-│   └── mcp_server.py                  # MCP server (Hermes integráció)
+│   ├── __init__.py                    # Core module (bus, autonomy, cards, discover)
+│   └── mcp_server.py                  # MCP server (Hermes integration)
 ├── memory/
 │   └── mcp_server.py                  # Mnemosyne MCP server
 ├── agent_cards/
-│   ├── general.json                   # Orchestrátor kártya
-│   ├── dev.json                       # Dev kártya
-│   ├── research.json                  # Research kártya
-│   └── study.json                     # Study kártya
+│   ├── general.json                   # Orchestrator card
+│   ├── dev.json                       # Dev card
+│   ├── research.json                  # Research card
+│   └── study.json                     # Study card
 ├── souls/
 │   ├── general.md                     # General SOUL.md
 │   ├── dev.md                         # Dev SOUL.md
 │   ├── research.md                    # Research SOUL.md
 │   └── study.md                       # Study SOUL.md
 ├── profiles/
-│   ├── general.yaml                   # General profil config
-│   ├── dev.yaml                       # Dev profil config
-│   ├── research.yaml                  # Research profil config
-│   └── study.yaml                     # Study profil config
-├── .env.example                       # Környezeti változók sablon
+│   ├── general.yaml                   # General profile config
+│   ├── dev.yaml                       # Dev profile config
+│   ├── research.yaml                  # Research profile config
+│   └── study.yaml                     # Study profile config
+├── .env.example                       # Environment variable template
 ├── .gitignore
 └── scripts/
-    ├── start-gateways.sh              # Összes gateway indítása
-    └── restart-gateways.sh            # Gateway újraindítás staggered
+    ├── start-gateways.sh              # Start all gateways
+    └── restart-gateways.sh            # Staggered gateway restart
 ```
 
-## Gateway Konfiguráció
+## Gateway Configuration
 
-### Telegram (csak General)
+### Telegram (General only)
 
-A **General** profil az egyetlen, amelyik Telegram hozzáféréssel rendelkezik:
+The **General** profile is the only one with Telegram access:
 
 ```yaml
 # ~/.hermes/profiles/general/config.yaml
 telegram:
   enabled: true
   reactions: false
-  allowed_chats: '717405081'  # Csak Krisztian privát chat-je
+  allowed_chats: '717405081'  # Only Krisztian's private chat
 discord:
   token: ${DISCORD_GENERAL_TOKEN}
   require_mention: true
@@ -174,9 +174,9 @@ discord:
   allowed_channels: 1501148038117330995,...
 ```
 
-### Discord (minden ágens)
+### Discord (all agents)
 
-Minden ágens saját Discord bot tokennel és csatornákkal:
+Each agent with its own Discord bot token and channels:
 
 ```json
 {
@@ -192,22 +192,22 @@ Minden ágens saját Discord bot tokennel és csatornákkal:
 }
 ```
 
-## Indítás
+## Startup
 
 ```bash
-# Összes gateway elindítása
+# Start all gateways
 ./scripts/start-gateways.sh
 
-# Vagy egyénileg
+# Or individually
 hermes gateway run --profile general --replace &
 hermes gateway run --profile dev --replace &
 hermes gateway run --profile research --replace &
 hermes gateway run --profile study --replace &
 ```
 
-## MCP Integráció
+## MCP Integration
 
-Minden profil configjában regisztrálva van a Marveen és a Memory MCP server:
+Each profile's config has the Marveen and Memory MCP servers registered:
 
 ```yaml
 mcp_servers:
@@ -225,12 +225,12 @@ mcp_servers:
     timeout: 30
 ```
 
-## Telepítés az éles rendszerbe
+## Installation into the Production System
 
-A fájlok az alábbi helyekre másolandók:
+The files should be copied to the following locations:
 
 ```bash
-# Marveen core modul
+# Marveen core module
 ~/.hermes/scripts/marveen/__init__.py
 ~/.hermes/scripts/marveen_mcp_server.py
 
@@ -253,11 +253,11 @@ A fájlok az alábbi helyekre másolandók:
 ~/.hermes/profiles/study/SOUL.md
 
 # Team knowledge
-~/.hermes/discord-multi-agent/team-knowledge.md  # vagy bárhova a SOUL.md-k hivatkozzanak
+~/.hermes/discord-multi-agent/team-knowledge.md  # or wherever the SOUL.md files reference
 ```
 
-## Verzió
+## Version
 
-- **v1** — Bridge v3, 7 ágenses, hermes_bus.py, mem0 shared memory
+- **v1** — Bridge v3, 7 agents, hermes_bus.py, mem0 shared memory
 - **v2** — Marveen Message Bus, Agent Cards, Gradual Autonomy, Dream Engine (legacy repo)
-- **v3** — 4 ágenses (General/Dev/Research/Study), Hermes-native MCP, Mnemosyne memory, Telegram exclusive to General
+- **v3** — 4 agents (General/Dev/Research/Study), Hermes-native MCP, Mnemosyne memory, Telegram exclusive to General

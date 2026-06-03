@@ -213,21 +213,21 @@ def cleanup_old_messages(hours: int = 72):
 # =============================================================================
 
 DEFAULT_AUTONOMY_CATEGORIES = [
-    {"key": "kanban_archive_done",  "label": "Kanban archiválás",       "level": 3, "locked": False, "maxLevel": 3},
-    {"key": "file_read",            "label": "Fájl olvasás",            "level": 3, "locked": False, "maxLevel": 3},
-    {"key": "file_write",           "label": "Fájl írás/módosítás",     "level": 2, "locked": False, "maxLevel": 3},
-    {"key": "git_push",             "label": "Git push",                "level": 1, "locked": False, "maxLevel": 2},
-    {"key": "git_force_push",       "label": "Git force push",          "level": 1, "locked": True,  "maxLevel": 1},
-    {"key": "email_send",           "label": "Email küldés",            "level": 1, "locked": True,  "maxLevel": 1},
-    {"key": "payment",              "label": "Pénzügyi művelet",        "level": 1, "locked": True,  "maxLevel": 1},
-    {"key": "deployment",           "label": "Deploy",                  "level": 1, "locked": False, "maxLevel": 2},
-    {"key": "research",             "label": "Kutatás/Web scraping",    "level": 3, "locked": False, "maxLevel": 3},
-    {"key": "system_maintenance",   "label": "Rendszer karbantartás",   "level": 2, "locked": False, "maxLevel": 3},
-    {"key": "cron_management",      "label": "Cron feladatok kezelése", "level": 2, "locked": False, "maxLevel": 3},
-    {"key": "memory_write",         "label": "Memória írás",            "level": 3, "locked": False, "maxLevel": 3},
-    {"key": "code_execution",       "label": "Kód futtatás",            "level": 2, "locked": False, "maxLevel": 2},
-    {"key": "api_call",             "label": "API hívás (külső)",       "level": 2, "locked": False, "maxLevel": 2},
-    {"key": "secret_access",        "label": "Titkok/API kulcsok",      "level": 1, "locked": True,  "maxLevel": 1},
+    {"key": "kanban_archive_done",  "label": "Kanban archive",           "level": 3, "locked": False, "maxLevel": 3},
+    {"key": "file_read",            "label": "File read",                "level": 3, "locked": False, "maxLevel": 3},
+    {"key": "file_write",           "label": "File write/edit",          "level": 2, "locked": False, "maxLevel": 3},
+    {"key": "git_push",             "label": "Git push",                 "level": 1, "locked": False, "maxLevel": 2},
+    {"key": "git_force_push",       "label": "Git force push",           "level": 1, "locked": True,  "maxLevel": 1},
+    {"key": "email_send",           "label": "Email send",               "level": 1, "locked": True,  "maxLevel": 1},
+    {"key": "payment",              "label": "Payment operation",        "level": 1, "locked": True,  "maxLevel": 1},
+    {"key": "deployment",           "label": "Deployment",               "level": 1, "locked": False, "maxLevel": 2},
+    {"key": "research",             "label": "Research/Web scraping",    "level": 3, "locked": False, "maxLevel": 3},
+    {"key": "system_maintenance",   "label": "System maintenance",       "level": 2, "locked": False, "maxLevel": 3},
+    {"key": "cron_management",      "label": "Cron job management",      "level": 2, "locked": False, "maxLevel": 3},
+    {"key": "memory_write",         "label": "Memory write",             "level": 3, "locked": False, "maxLevel": 3},
+    {"key": "code_execution",       "label": "Code execution",           "level": 2, "locked": False, "maxLevel": 2},
+    {"key": "api_call",             "label": "API call (external)",       "level": 2, "locked": False, "maxLevel": 2},
+    {"key": "secret_access",        "label": "Secrets/API keys",          "level": 1, "locked": True,  "maxLevel": 1},
 ]
 
 
@@ -288,14 +288,14 @@ def set_autonomy_level(category_key: str, level: int) -> tuple[bool, str]:
     for cat in config.get("categories", []):
         if cat["key"] == category_key:
             if cat.get("locked", False):
-                return False, f"A '{cat['label']}' kategória zárolva, nem módosítható."
+                return False, f"Category '{cat['label']}' is locked and cannot be modified."
             max_lvl = cat.get("maxLevel", 3)
             if level < 1 or level > max_lvl:
-                return False, f"A szint 1 és {max_lvl} között lehet (jelenleg: {level})."
+                return False, f"Level must be between 1 and {max_lvl} (current: {level})."
             cat["level"] = level
             _save_autonomy_config(config)
-            return True, f"'{cat['label']}' szint beállítva: {level}."
-    return False, f"Nincs '{category_key}' kategória."
+            return True, f"'{cat['label']}' level set to {level}."
+    return False, f"No category '{category_key}' found."
 
 
 def classify_command(command: str) -> str:
@@ -446,7 +446,7 @@ def discover_agents(task: str, top_k: int = 3, min_score: float = 1.0) -> list[d
             "display_name": "Dev Agent",
             "score": 7.5,
             "skill": "implement-feature",
-            "reasoning": "matched: implementáld, build feature",
+            "reasoning": "matched: implement, build feature",
             "model": "DS-V4-Flash",
             "autonomy_level": 2
           },

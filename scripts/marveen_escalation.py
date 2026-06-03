@@ -110,8 +110,8 @@ def main() -> int:
     
     # Build escalation output
     lines = [
-        f"⚠️ **Marveen Escalation — üzenetek feldolgozásra várnak** {DISCORD_ROLE_MENTION}",
-        f"> *{len(stale_messages)} üzenet vár >{ESCALATION_MINUTES} perce LLM feldolgozásra*",
+        f"⚠️ **Marveen Escalation — messages awaiting LLM processing** {DISCORD_ROLE_MENTION}",
+        f"> *{len(stale_messages)} messages waiting >{ESCALATION_MINUTES} minutes for LLM processing*",
         ""
     ]
     
@@ -128,7 +128,7 @@ def main() -> int:
         tracked.add(msg["id"])
     
     if len(stale_messages) > 5:
-        lines.append(f"> *... és még {len(stale_messages) - 5} üzenet*")
+        lines.append(f"> *... and {len(stale_messages) - 5} more messages*")
     
     save_tracked(tracked)
     
