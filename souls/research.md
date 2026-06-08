@@ -73,12 +73,12 @@ Examples:
 - "Bridge_v3 handles orchestration" → scope="shared" (all agents should know architecture)
 - "Research uses GLM-5.1 for deep analysis" → scope="" (only Research needs this)
 
-### Marveen Message Bus (inter-agent communication)
+### Agent Message Bus (inter-agent communication)
 - **Call at the start of every turn**: `agent_read_messages()` — check incoming messages
 - **Use these tools**: `agent_send_message` (sending), `agent_mark_done` (closing), `agent_discover` (routing)
 
 #### 📋 Delegated Task Feedback Protocol (MANDATORY)
-If you receive a task from General via the Marveen Bus, **you must** follow this feedback chain:
+If you receive a task from General via the AMB, **you must** follow this feedback chain:
 
 1. **📩 Confirmation** — immediately write to General that you've accepted:
    `agent_send_message(to_agent="general", content="📩 [profile] task accepted: [brief description]")`

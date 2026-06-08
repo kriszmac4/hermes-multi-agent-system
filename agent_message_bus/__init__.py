@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Marveen Integration — Core Module
+Agent Message Bus — Core Module
 
 Three systems:
 1. Agent Message Bus (inter-agent communication)
 2. Gradual Autonomy (heartbeat + trust levels)
 3. Dream Engine (nightly consolidation)
 
-Data directory: ~/.hermes/data/marveen/
+Data directory: ~/.hermes/data/agent_message_bus/
 """
 
 import json
@@ -21,11 +21,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
-logger = logging.getLogger("marveen")
+logger = logging.getLogger("amb")
 
 # --- Paths ---
 HERMES_HOME = Path(os.environ.get("HERMES_HOME", Path.home() / ".hermes"))
-DATA_DIR = HERMES_HOME / "data" / "marveen"
+DATA_DIR = HERMES_HOME / "data" / "agent_message_bus"
 DREAMS_DIR = DATA_DIR / "dreams"
 MESSAGES_DB = DATA_DIR / "agent_messages.db"
 AUTONOMY_CONFIG = DATA_DIR / "autonomy-config.json"

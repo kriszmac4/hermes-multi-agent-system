@@ -1,6 +1,6 @@
 {
   "version": "4.0.0",
-  "description": "Hermes Multi-Agent System v4 — 4 agents, Telegram+Discord, Marveen Bus, Mnemosyne Memory",
+  "description": "Hermes Multi-Agent System v4 — 4 agents, Telegram+Discord, AMB, Mnemosyne Memory",
   "server_id": "1501144914333925376",
   "agents": {
     "general": {
@@ -56,7 +56,7 @@
   },
   "message_bus": {
     "type": "sqlite_wal",
-    "path": "~/.hermes/data/marveen/agent_messages.db",
+    "path": "~/.hermes/data/agent_message_bus/agent_messages.db",
     "cleanup_hours": 72
   },
   "memory": {

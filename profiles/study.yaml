@@ -33,10 +33,10 @@ mcp_servers:
       HEADLESS: 'true'
       DISPLAY: :99
       STEALTH_ENABLED: 'false'
-  marveen:
+  agent_message_bus:
     command: python3
     args:
-    - /home/artofphotogrphyy/.hermes/scripts/marveen_mcp_server.py
+    - /home/artofphotogrphyy/.hermes/scripts/agent_message_bus_mcp_server.py
     env:
       HERMES_HOME: /home/artofphotogrphyy/.hermes
 onboarding:

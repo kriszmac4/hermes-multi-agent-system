@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Marveen Dream Engine — Nightly Consolidation (02:00 UTC)
+AMB Dream Engine — Nightly Consolidation (02:00 UTC)
 
 5 buckets:
 1. 💡 Skill suggestions from daily patterns
@@ -9,7 +9,7 @@ Marveen Dream Engine — Nightly Consolidation (02:00 UTC)
 4. 🌐 External opportunity (weekly)
 5. 🛠 Skill fleet health
 
-Output: ~/.hermes/data/marveen/dreams/YYYY-MM-DD_DREAM.md
+Output: ~/.hermes/data/agent_message_bus/dreams/YYYY-MM-DD_DREAM.md
 """
 
 import json
@@ -22,7 +22,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path.home() / ".hermes" / "scripts"))
-from marveen import DATA_DIR, DREAMS_DIR
+from agent_message_bus import DATA_DIR, DREAMS_DIR
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("dream-engine")
@@ -120,7 +120,7 @@ def get_memory_stats() -> dict:
 
 def get_message_stats() -> dict:
     """Get agent message bus stats."""
-    from marveen import get_messages
+    from agent_message_bus import get_messages
     pending = get_messages(status="pending", limit=0)
     delivered = get_messages(status="delivered", limit=0)
     done = get_messages(status="done", limit=0)

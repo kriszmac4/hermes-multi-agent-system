@@ -12,7 +12,7 @@ Format: each block is marked with [YOUR_PROFILE] indicating who wrote it.
 - Discord: Each agent has its own bot, on separate channels
 - Models: General=GLM-5.1, Dev=big-pickle, Research=GLM-5.1, Study=big-pickle
 - Provider: OpenCode Go ART (GLM-5.1, MiniMax), OpenCode Zen ART (big-pickle)
-- Marveen Message Bus: inter-agent communication via SQLite WAL-mode
+- Agent Message Bus: inter-agent communication via SQLite WAL-mode
 - Hermes Mnemosyne: shared memory (sqlite-vec + FTS5)
 - Home PC: Python 3.11.2, uv package manager, Hermes Agent vLatest
 - Approval: dev/devops/general=smart, research/study=off
@@ -58,7 +58,7 @@ Format: each block is marked with [YOUR_PROFILE] indicating who wrote it.
 
 ---
 
-## 📬 Marveen Message Bus
+## 📬 Agent Message Bus
 
 ### MCP Tools
 - `agent_send_message(to_agent, content, priority)` — sending a message
@@ -67,7 +67,7 @@ Format: each block is marked with [YOUR_PROFILE] indicating who wrote it.
 - `agent_discover(task, top_k)` — find the best agent
 - `agent_list_cards()` — list of registered agents
 - `autonomy_get_levels()` / `autonomy_set_level()` — autonomy levels
-- `marveen_status()` — system status
+- `agent_message_bus_status()` — system status
 
 ### State Cycle
 `pending` → `delivered` → `read` → `done` / `failed`
@@ -134,7 +134,7 @@ Telegram access is EXCLUSIVELY for the General profile.
 All other agents only communicate via Discord.
 This ensures that Krisztian's DM always reaches the coordinator.
 
-### [General] 2026-06-02: Marveen MCP native integration
+### [General] 2026-06-02: AMB MCP native integration
 bridge_v3.py and hermes_bus.py replaced with Hermes-native MCP tools.
-The Marveen Message Bus now runs as an MCP server, not as a standalone script.
+The Agent Message Bus now runs as an MCP server, not as a standalone script.
 The Hermes Mnemosyne memory MCP is also natively integrated.

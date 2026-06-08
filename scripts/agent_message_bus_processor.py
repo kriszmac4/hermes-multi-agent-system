@@ -1,12 +1,12 @@
 #!/home/artofphotogrphyy/.hermes/.venv/bin/python3
 """
-Marveen Universal Message Processor — LLM-based processing of inter-agent messages.
+AMB Universal Message Processor — LLM-based processing of inter-agent messages.
 
-This script is meant to be run by the marveen-processor cron job (agent mode).
-It reads pending messages from the Marveen bus and generates intelligent responses.
+This script is meant to be run by the agent_message_bus-processor cron job (agent mode).
+It reads pending messages from the Agent Message Bus and generates intelligent responses.
 
 Flow:
-1. Check trigger file (/tmp/marveen-trigger)
+1. Check trigger file (/tmp/amb-trigger)
 2. Read ALL pending messages from the DB
 3. For each message, determine context and generate appropriate response
 4. Send response back to the original sender
@@ -15,7 +15,7 @@ Flow:
 7. Output summary report
 
 Usage:
-    PYTHONPATH=~/.hermes/scripts ~/.hermes/.venv/bin/python3 marveen_processor.py
+    PYTHONPATH=~/.hermes/scripts ~/.hermes/.venv/bin/python3 agent_message_bus_processor.py
 """
 
 import json
@@ -27,7 +27,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path.home() / ".hermes" / "scripts"))
-from marveen import (
+from agent_message_bus import (
     create_message,
     get_pending_messages,
     get_messages,
@@ -39,9 +39,9 @@ from marveen import (
 )
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-logger = logging.getLogger("marveen-processor")
+logger = logging.getLogger("amb-processor")
 
-TRIGGER_FILE = "/tmp/marveen-trigger"
+TRIGGER_FILE = "/tmp/amb-trigger"
 
 # ─── Agent Response Handlers ──────────────────────────────────────────────
 
@@ -295,7 +295,7 @@ def main() -> int:
     # ── Output report ──
     timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     report = [
-        f"🤖 **Marveen Processzor — {timestamp}**",
+        f"🤖 **AMB Processzor — {timestamp}**",
         f"",
     ]
 

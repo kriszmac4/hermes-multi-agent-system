@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sqlite3, time
 
-db = sqlite3.connect('/home/artofphotogrphyy/.hermes/data/marveen/agent_messages.db')
+db = sqlite3.connect('/home/artofphotogrphyy/.hermes/data/agent_message_bus/agent_messages.db')
 db.row_factory = sqlite3.Row
 
 for s in ['pending','delivered','read','done','failed']:

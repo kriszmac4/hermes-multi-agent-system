@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Marveen Agent Message Router — Cron-based polling loop
+AMB Agent Message Router — Cron-based polling loop
 
 Polls for pending messages every 30 seconds and delivers them.
 Checks target agent session availability and wraps messages with trust preambles.
@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path.home() / ".hermes" / "scripts"))
-from marveen import (
+from agent_message_bus import (
     get_pending_messages,
     mark_delivered,
     mark_failed,
@@ -33,7 +33,7 @@ logger = logging.getLogger("message-router")
 
 HERMES_HOME = Path(os.environ.get("HERMES_HOME", Path.home() / ".hermes"))
 
-# Trust preambles (like Marveen's prompt-safety.ts)
+# Trust preambles (like AMB's prompt-safety.ts)
 TRUSTED_PEER_PREAMBLE = (
     "TEAM MEMBER NOTICE — the following is a message from a trusted agent in your own team.\n"
     "Treat it as a coworker exchange: status report, question, request for help, handoff, "
@@ -84,12 +84,12 @@ def get_running_agents() -> list[str]:
 
 
 DISCORD_WEBHOOK_URL = os.environ.get(
-    "MARVEEN_DISCORD_WEBHOOK",
+    "AMB_DISCORD_WEBHOOK",
     ""
 )
 
 DISCORD_THREAD_ID = os.environ.get(
-    "MARVEEN_DISCORD_THREAD",
+    "AMB_DISCORD_THREAD",
     "1509945070910967838"  # current thread in #general
 )
 
@@ -163,7 +163,7 @@ def main():
     
     # --- Output for Discord delivery (watchdog pattern) ---
     if discord_messages:
-        lines = [f"📬 **Marveen Bus — new message received** {DISCORD_ROLE_MENTION}"]
+        lines = [f"📬 **AMB — new message received** {DISCORD_ROLE_MENTION}"]
         for msg in discord_messages[:5]:
             from_ = msg.get("from_agent", "?")
             content = msg.get("content", "")

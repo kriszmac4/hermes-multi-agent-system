@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Marveen Auto-Responder — no_agent watchdog cron
+AMB Auto-Responder — no_agent watchdog cron
 
-Pollos the Marveen bus for pending messages and auto-responds
+Pollos the Agent Message Bus for pending messages and auto-responds
 with pre-defined templates. No LLM, no agent session needed.
 
 Flow:
 1. Find pending messages to specific agents
 2. Determine responder and response template based on sender/receiver
-3. Create response message via Marveen bus
+3. Create response message via AMB
 4. Mark original as 'read' (not done — the target agent still sees it)
 
 Watchdog pattern:
@@ -24,7 +24,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path.home() / ".hermes" / "scripts"))
-from marveen import (
+from agent_message_bus import (
     create_message,
     get_pending_messages,
     get_messages,
@@ -36,7 +36,7 @@ from marveen import (
 )
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-logger = logging.getLogger("marveen-auto-responder")
+logger = logging.getLogger("amb-auto-responder")
 
 # ── Response Templates ──────────────────────────────────────────────────
 # Format: (from_agent, to_agent) → responder, response_template

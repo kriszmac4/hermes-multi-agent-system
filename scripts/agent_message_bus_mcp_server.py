@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Marveen MCP Server — Hermes Agent Integration
+Agent Message Bus MCP Server — Hermes Agent Integration
 
 Exposes tools for:
 - Agent Message Bus (inter-agent communication)
@@ -8,13 +8,13 @@ Exposes tools for:
 - Dream Engine (nightly consolidation)
 
 Usage:
-    chmod +x ~/.hermes/scripts/marveen_mcp_server.py
-    ~/.hermes/scripts/marveen_mcp_server.py
+    chmod +x ~/.hermes/scripts/agent_message_bus_mcp_server.py
+    ~/.hermes/scripts/agent_message_bus_mcp_server.py
 
 Register in ~/.hermes/config.yaml:
     mcp_servers:
-      marveen:
-        command: "/home/artofphotogrphyy/.hermes/scripts/marveen_mcp_server.py"
+      agent_message_bus:
+        command: "/home/artofphotogrphyy/.hermes/scripts/agent_message_bus_mcp_server.py"
         timeout: 30
         connect_timeout: 5
 """
@@ -27,9 +27,9 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Ensure marveen module is importable
+# Ensure agent_message_bus module is importable
 sys.path.insert(0, str(Path.home() / ".hermes" / "scripts"))
-from marveen import (
+from agent_message_bus import (
     create_message,
     get_pending_messages,
     get_messages,
@@ -49,7 +49,7 @@ from marveen import (
 )
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-logger = logging.getLogger("marveen-mcp")
+logger = logging.getLogger("amb-mcp")
 
 
 def _json_result(data) -> dict:
@@ -70,7 +70,7 @@ from mcp.server import NotificationOptions, Server
 from mcp.server.stdio import stdio_server
 from mcp.types import Tool
 
-server = Server("marveen")
+server = Server("agent_message_bus")
 
 
 def _tool(name: str, description: str, inputSchema: dict) -> Tool:
@@ -83,7 +83,7 @@ async def list_tools() -> list[Tool]:
         # --- Agent Message Bus tools ---
         _tool(
             "agent_send_message",
-            "Send an async message to another agent via the Marveen Message Bus. "
+            "Send an async message to another agent via the Agent Message Bus. "
             "Agents: 'general', 'dev', 'research', 'study'. "
             "The from_agent is auto-detected from your profile. "
             "The message will be delivered when the target agent checks their inbox.",
@@ -206,8 +206,8 @@ async def list_tools() -> list[Tool]:
         ),
         # --- System tools ---
         _tool(
-            "marveen_status",
-            "Get overall status of the Marveen integration system: "
+            "agent_message_bus_status",
+            "Get overall status of the Agent Message Bus integration system: "
             "message queue stats, autonomy config, and last dream report.",
             {"type": "object", "properties": {}}
         ),
@@ -280,7 +280,7 @@ async def call_tool(name: str, arguments: dict) -> list[dict]:
             min_score = arguments.get("min_score", 1.0)
             matches = discover_agents(task, top_k=top_k, min_score=min_score)
             if not matches:
-                return _text_result("Nincs regisztrált Agent Card. Hozz létre egyet ~/.hermes/data/marveen/agent_cards/ alá.")
+                return _text_result("Nincs regisztrált Agent Card. Hozz létre egyet ~/.hermes/data/agent_message_bus/agent_cards/ alá.")
             lines = [f"**🎯 Agent routing — top {len(matches)} találat**\n"]
             for i, m in enumerate(matches, 1):
                 emoji = "🏆" if i == 1 else f"{i}."
@@ -359,7 +359,7 @@ async def call_tool(name: str, arguments: dict) -> list[dict]:
             content = dreams[0].read_text()
             return _text_result(f"**🌙 Dream Engine — {dreams[0].stem}**\n\n{content}")
 
-        elif name == "marveen_status":
+        elif name == "agent_message_bus_status":
             # Message queue stats
             pending = get_messages(status="pending", limit=0)
             delivered = get_messages(status="delivered", limit=0)
@@ -376,7 +376,7 @@ async def call_tool(name: str, arguments: dict) -> list[dict]:
             last_dream = dreams[0].stem if dreams else "Még nincs"
             
             return _text_result(
-                "**📊 Marveen Integration Status**\n\n"
+                "**📊 Agent Message Bus — Status**\n\n"
                 "**📬 Agent Message Bus**\n"
                 f"- Függőben lévő üzenetek: {len(pending)}\n"
                 f"- Kézbesítve, olvasatlan: {len(delivered)}\n"
@@ -405,7 +405,7 @@ async def main():
             read_stream,
             write_stream,
             InitializationOptions(
-                server_name="marveen",
+                server_name="agent_message_bus",
                 server_version="1.0.0",
                 capabilities=server.get_capabilities(
                     notification_options=NotificationOptions(),

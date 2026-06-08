@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
 """
-Marveen Event Router — Phase 3: event-driven skill match + auto-trigger.
+Agent Message Bus Event Router — Phase 3: event-driven skill match + auto-trigger.
 
-Periodically scans the Marveen message bus for newly-completed (status='done')
+Periodically scans the Agent Message Bus for newly-completed (status='done')
 messages, logs them to the skill registry, and (optionally) triggers follow-up
 agents based on the Agent Card's `triggers` field.
 
 Cron expression (suggested): every 5 minutes.
-    */5 * * * *  ~/.hermes/.venv/bin/python3 ~/.hermes/scripts/marveen_event_router.py >> ~/.hermes/logs/marveen_router.log 2>&1
+    */5 * * * *  ~/.hermes/.venv/bin/python3 ~/.hermes/scripts/agent_message_bus_event_router.py >> ~/.hermes/logs/agent_message_bus_router.log 2>&1
 
 Outputs:
 - Per-run: appended to skill_registry.json
-- Notifications: sent via mcp_marveen_agent_send_message to the orchestrator
-- Logs: stdout (caller redirects to logs/marveen_router.log)
+- Notifications: sent via mcp_agent_message_bus_agent_send_message to the orchestrator
+- Logs: stdout (caller redirects to logs/agent_message_bus_router.log)
 
 Usage:
-    ~/.hermes/.venv/bin/python3 ~/.hermes/scripts/marveen_event_router.py
-    ~/.hermes/.venv/bin/python3 ~/.hermes/scripts/marveen_event_router.py --once --lookback-minutes 60
-    ~/.hermes/.venv/bin/python3 ~/.hermes/scripts/marveen_event_router.py --dry-run
+    ~/.hermes/.venv/bin/python3 ~/.hermes/scripts/agent_message_bus_event_router.py
+    ~/.hermes/.venv/bin/python3 ~/.hermes/scripts/agent_message_bus_event_router.py --once --lookback-minutes 60
+    ~/.hermes/.venv/bin/python3 ~/.hermes/scripts/agent_message_bus_event_router.py --dry-run
 """
 
 import argparse
@@ -28,9 +28,9 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Ensure marveen module is importable
+# Ensure agent_message_bus module is importable
 sys.path.insert(0, str(Path.home() / ".hermes" / "scripts"))
-from marveen import (
+from agent_message_bus import (
     _load_all_agent_cards,
     SKILL_REGISTRY,
     DATA_DIR,
@@ -40,7 +40,7 @@ from marveen import (
 )
 
 # Where this script writes its own per-run log
-ROUTER_LOG = Path.home() / ".hermes" / "logs" / "marveen_router.log"
+ROUTER_LOG = Path.home() / ".hermes" / "logs" / "agent_message_bus_router.log"
 ROUTER_STATE = DATA_DIR / "router_state.json"
 
 
@@ -260,7 +260,7 @@ def run_once(lookback_minutes: int = 30, dry_run: bool = False) -> dict:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Marveen event-driven skill router")
+    parser = argparse.ArgumentParser(description="Agent Message Bus event-driven skill router")
     parser.add_argument("--once", action="store_true", help="Run a single pass and exit")
     parser.add_argument("--interval", type=int, default=300, help="Loop interval seconds (default: 300 = 5 min)")
     parser.add_argument("--lookback-minutes", type=int, default=30, help="Lookback for unprocessed messages (default: 30)")
@@ -273,7 +273,7 @@ def main():
         return
 
     # Loop mode (for systemd service or testing)
-    print(f"Marveen event router started. interval={args.interval}s", file=sys.stderr)
+    print(f"AMB event router started. interval={args.interval}s", file=sys.stderr)
     while True:
         try:
             result = run_once(lookback_minutes=args.lookback_minutes, dry_run=args.dry_run)

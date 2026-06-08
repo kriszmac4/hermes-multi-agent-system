@@ -2,7 +2,7 @@
 """Check pending messages via direct DB access and write to output file."""
 import sys, json
 sys.path.insert(0, '/home/artofphotogrphyy/.hermes/scripts')
-from marveen import get_pending_messages, get_messages
+from agent_message_bus import get_pending_messages, get_messages
 
 results = {"pending": [], "delivered": [], "read": []}
 
@@ -19,7 +19,7 @@ for status in ("delivered", "read"):
                          "content": m["content"][:200], "created": m["created_at"]}
                         for m in msgs]
 
-output_path = '/tmp/marveen_check_results.json'
+output_path = '/tmp/amb_check_results.json'
 with open(output_path, 'w') as f:
     json.dump(results, f, indent=2, ensure_ascii=False)
 print(f"Results written to {output_path}")

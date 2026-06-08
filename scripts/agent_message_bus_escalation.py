@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Marveen Escalation Watchdog — no_agent cron
+AMB Escalation Watchdog — no_agent cron
 
 Detects messages that were delivered/read but never processed by an LLM.
 If a message sits unprocessed for >5 minutes, pushes a Discord notification
@@ -19,10 +19,10 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path.home() / ".hermes" / "scripts"))
-from marveen import DATA_DIR
+from agent_message_bus import DATA_DIR
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-logger = logging.getLogger("marveen-escalation")
+logger = logging.getLogger("amb-escalation")
 
 # ── Config ──────────────────────────────────────────────────────────────
 ESCALATION_MINUTES = 5  # How long before a message is considered "stale"
@@ -110,7 +110,7 @@ def main() -> int:
     
     # Build escalation output
     lines = [
-        f"⚠️ **Marveen Escalation — messages awaiting LLM processing** {DISCORD_ROLE_MENTION}",
+        f"⚠️ **AMB Escalation — messages awaiting LLM processing** {DISCORD_ROLE_MENTION}",
         f"> *{len(stale_messages)} messages waiting >{ESCALATION_MINUTES} minutes for LLM processing*",
         ""
     ]

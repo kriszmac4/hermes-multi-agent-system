@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Marveen Heartbeat — System health check
+AMB Heartbeat — System health check
 
 Runs every hour as a no_agent cron script.
 - Checks message queue health
@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path.home() / ".hermes" / "scripts"))
-from marveen import (
+from agent_message_bus import (
     get_messages,
     get_all_autonomy_categories,
     AUTONOMY_CONFIG,
@@ -91,7 +91,7 @@ def main():
     if not issues:
         return 0  # Silent — watchdog pattern
     
-    print(f"**💓 Marveen Heartbeat — {datetime.now(timezone.utc).strftime('%H:%M UTC')}**")
+    print(f"**💓 AMB Heartbeat — {datetime.now(timezone.utc).strftime('%H:%M UTC')}**")
     for issue in issues:
         print(f"- {issue}")
     print("\n_Heartbeat runs automatically every hour._")

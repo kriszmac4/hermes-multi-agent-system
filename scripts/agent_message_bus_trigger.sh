@@ -1,11 +1,11 @@
 #!/bin/bash
-# Marveen Trigger — no_agent watchdog cron
+# AMB Trigger — no_agent watchdog cron
 # Detects pending messages, writes trigger file for LLM processor
 # Outputs to stdout only when there's work (watchdog pattern)
 
-MARVEEN_DIR="/home/artofphotogrphyy/.hermes/scripts"
-TRIGGER_FILE="/tmp/marveen-trigger"
-LOCK_FILE="/tmp/marveen-trigger.lock"
+AMB_DIR="/home/artofphotogrphyy/.hermes/scripts"
+TRIGGER_FILE="/tmp/amb-trigger"
+LOCK_FILE="/tmp/amb-trigger.lock"
 
 # Prevent concurrent runs
 if [ -f "$LOCK_FILE" ] && [ -n "$(find "$LOCK_FILE" -mmin -1 2>/dev/null)" ]; then
@@ -14,10 +14,10 @@ fi
 touch "$LOCK_FILE"
 
 # Check for pending messages
-PENDING=$(cd "$MARVEEN_DIR" && PYTHONPATH=. /home/artofphotogrphyy/.hermes/.venv/bin/python3 -c "
+PENDING=$(cd "$AMB_DIR" && PYTHONPATH=. /home/artofphotogrphyy/.hermes/.venv/bin/python3 -c "
 import sys
 sys.path.insert(0, '.')
-from marveen import get_pending_messages
+from agent_message_bus import get_pending_messages
 msgs = get_pending_messages(limit=100)
 if not msgs:
     sys.exit(0)
@@ -32,12 +32,12 @@ from collections import Counter
 counts = Counter(m['to_agent'] for m in msgs)
 
 # Write trigger file
-with open('/tmp/marveen-trigger', 'w') as f:
+with open('/tmp/amb-trigger', 'w') as f:
     for agent in sorted(agents):
         f.write(f'{agent}:{counts[agent]}\n')
 
 # Output summary
-print(f'📬 **Marveen Trigger** — $(date +\"%H:%M\")')
+print(f'📬 **AMB Trigger** — $(date +\"%H:%M\")')
 for agent in sorted(agents):
     print(f'  → **{agent}**: {counts[agent]} message(s)')
 total = len(msgs)
